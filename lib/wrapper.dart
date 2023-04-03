@@ -13,17 +13,15 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   int _currentIndex = 0;
+  List<Widget> _body = [Home(), NotificationPage(), Profile()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Home(),
+      body: _body[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        // type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: Colors.yellow[800],
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         currentIndex: _currentIndex,
         onTap: (int newIndex) {
           setState(() {
