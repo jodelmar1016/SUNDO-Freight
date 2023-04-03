@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:freight/pages/bookCargo.dart';
+import 'package:freight/router.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -71,58 +73,84 @@ class Home extends StatelessWidget {
     // SERVICES ------------------------------------->
     Widget services = Card(
       elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 25),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              children: [
-                Icon(
-                  Icons.add_box_rounded,
-                  size: 30,
-                  color: Colors.orangeAccent,
-                ),
-                Text(
-                  'Book Cargo',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BookCargo()),
+              );
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width / 4,
+              height: 80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.add_box_rounded,
+                    size: 30,
+                    color: Colors.orangeAccent,
                   ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Icon(
-                  Icons.paste,
-                  size: 30,
-                  color: Colors.orangeAccent,
-                ),
-                Text(
-                  'My Bookings',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    'Book Cargo',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Icon(
-                  Icons.calculate_rounded,
-                  size: 30,
-                  color: Colors.orangeAccent,
-                ),
-                Text(
-                  'Fare',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: MediaQuery.of(context).size.width / 4,
+              height: 80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.paste,
+                    size: 30,
+                    color: Colors.orangeAccent,
                   ),
-                ),
-              ],
+                  Text(
+                    'My Bookings',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: MediaQuery.of(context).size.width / 4,
+              height: 80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.calculate_rounded,
+                    size: 30,
+                    color: Colors.orangeAccent,
+                  ),
+                  Text(
+                    'Fare',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
 
@@ -145,7 +173,7 @@ class Home extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               width: 10,
               height: 10,
@@ -154,7 +182,7 @@ class Home extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               width: 10,
               height: 10,
@@ -179,8 +207,8 @@ class Home extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 header,
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   'Services',
                   style: TextStyle(
                     fontSize: 22,
@@ -188,8 +216,8 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 services,
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   'Promotions',
                   style: TextStyle(
                     fontSize: 22,
