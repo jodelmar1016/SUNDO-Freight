@@ -14,10 +14,32 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   int _currentIndex = 0;
   List<Widget> _body = [Home(), NotificationPage(), Profile()];
+  List<Widget> _appBarTitle = [
+    Icon(
+      Icons.flutter_dash,
+      size: 50,
+      color: Colors.orange,
+    ),
+    Text('N O T I F I C A T I O N'),
+    Text('P R O F I L E')
+  ];
+  List<bool> _centerTitle = [false, true, true];
+  // List<String> _appBarTitle = ['', 'NOTIFICATION', 'PROFILE'];
+  List<Color> _colors = [
+    Colors.transparent,
+    Colors.orangeAccent,
+    Colors.orangeAccent
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: _appBarTitle[_currentIndex],
+        centerTitle: _centerTitle[_currentIndex],
+        elevation: 0,
+        backgroundColor: _colors[_currentIndex],
+      ),
       body: _body[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: true,
@@ -26,7 +48,6 @@ class _WrapperState extends State<Wrapper> {
         onTap: (int newIndex) {
           setState(() {
             _currentIndex = newIndex;
-            print(newIndex);
           });
         },
         items: [
@@ -40,7 +61,7 @@ class _WrapperState extends State<Wrapper> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Me',
+            label: 'Profile',
           ),
         ],
       ),
