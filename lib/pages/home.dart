@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freight/pages/bookCargo.dart';
+import 'package:freight/pages/myBookings.dart';
 import 'package:freight/router.dart';
 
 class Home extends StatelessWidget {
@@ -105,7 +106,12 @@ class Home extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyBookings()),
+              );
+            },
             child: Container(
               width: MediaQuery.of(context).size.width / 4,
               height: 80,
@@ -202,7 +208,7 @@ class Home extends StatelessWidget {
       child: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 60, 15, 0),
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
