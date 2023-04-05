@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freight/pages/bookCargo.dart';
 import 'package:freight/pages/myBookings.dart';
+import 'package:freight/pages/fare.dart';
 import 'package:freight/router.dart';
 
 class Home extends StatelessWidget {
@@ -134,7 +135,12 @@ class Home extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Fare()),
+              );
+            },
             child: Container(
               width: MediaQuery.of(context).size.width / 4,
               height: 80,
