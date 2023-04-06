@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freight/pages/bookCargo.dart';
-import 'package:freight/pages/myBookings.dart';
-import 'package:freight/pages/fare.dart';
+import 'package:freight/pages/user/bookCargo.dart';
+import 'package:freight/pages/user/myBookings.dart';
+import 'package:freight/pages/user/fare.dart';
 import 'package:freight/router.dart';
 
 class Home extends StatelessWidget {

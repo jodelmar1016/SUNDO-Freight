@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:freight/wrapper.dart';
+import 'package:freight/pages/user/wrapper.dart';
+import 'package:freight/pages/admin/dashboard.dart';
 import 'package:freight/router.dart';
 
 class Splash extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SplashState extends State<Splash> {
     await Future.delayed(
       Duration(milliseconds: 1500),
       () {
-        Navigator.pushReplacement(context, MyPageRouter(page: Wrapper()));
+        Navigator.pushReplacement(context, MyPageRouter(page: Dashboard()));
       },
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:freight/pages/tabs/processing.dart';
-import 'package:freight/pages/tabs/completed.dart';
-import 'package:freight/pages/tabs/cancelled.dart';
+import 'package:freight/pages/user/tabs/processing.dart';
+import 'package:freight/pages/user/tabs/completed.dart';
+import 'package:freight/pages/user/tabs/cancelled.dart';
 
 class MyBookings extends StatelessWidget {
   const MyBookings({super.key});
