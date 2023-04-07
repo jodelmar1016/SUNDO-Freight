@@ -6,7 +6,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
-  print('Connected to firebase');
 }
 
 class MyApp extends StatelessWidget {
