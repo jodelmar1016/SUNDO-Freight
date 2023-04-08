@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:freight/pages/user/selectLocation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 
 class BookCargo extends StatefulWidget {
   const BookCargo({super.key});
@@ -9,6 +11,21 @@ class BookCargo extends StatefulWidget {
 }
 
 class _BookCargoState extends State<BookCargo> {
+  LatLng? _selectOrigin;
+  LatLng? _selectDestination;
+
+  void _handleSelectOrigin(LatLng selectedLatLng) {
+    setState(() {
+      _selectOrigin = selectedLatLng;
+    });
+  }
+
+  void _handleSelectDestination(LatLng selectedLatLng) {
+    setState(() {
+      _selectDestination = selectedLatLng;
+    });
+  }
+
   _BookCargoState() {
     _dropdownValue = items[0];
   }
@@ -199,6 +216,21 @@ class _BookCargoState extends State<BookCargo> {
                   child: ListView(
                     children: [
                       ListTile(
+                        onTap: () async {
+                          final selectedLatLng = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SelectLocation(),
+                            ),
+                          );
+
+                          if (selectedLatLng != null) {
+                            _handleSelectOrigin(selectedLatLng);
+                          }
+                        },
+                        title: _selectOrigin == null
+                            ? Text('Select Origin')
+                            : Text('$_selectOrigin'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         tileColor: Colors.grey[200],
@@ -207,10 +239,24 @@ class _BookCargoState extends State<BookCargo> {
                           color: Colors.redAccent,
                         ),
                         trailing: Icon(Icons.arrow_right_sharp),
-                        title: Text('Select Origin'),
                       ),
                       SizedBox(height: 10),
                       ListTile(
+                        onTap: () async {
+                          final selectedLatLng = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SelectLocation(),
+                            ),
+                          );
+
+                          if (selectedLatLng != null) {
+                            _handleSelectDestination(selectedLatLng);
+                          }
+                        },
+                        title: _selectDestination == null
+                            ? Text('Select Destination')
+                            : Text('$_selectDestination'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         tileColor: Colors.grey[200],
@@ -219,7 +265,6 @@ class _BookCargoState extends State<BookCargo> {
                           color: Colors.redAccent,
                         ),
                         trailing: Icon(Icons.arrow_right_sharp),
-                        title: Text('Select Destination'),
                       ),
                       SizedBox(height: 10),
                       cargoInformation,
