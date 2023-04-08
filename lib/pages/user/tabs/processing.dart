@@ -26,8 +26,13 @@ class _ProcessingState extends State<Processing> {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (BuildContext context, int index) {
+                GeoPoint geoPoint = snapshot.data!.docs[index]['origin'];
+                String originString =
+                    '${geoPoint.latitude}, ${geoPoint.longitude}';
                 return BookingItem(
-                  title: snapshot.data!.docs[index]['origin'],
+                  title: originString,
+                  subtitle:
+                      'Sender name: ${snapshot.data!.docs[index]['sender_name']}',
                 );
               },
             );

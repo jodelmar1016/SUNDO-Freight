@@ -12,6 +12,7 @@ class Cancelled extends StatelessWidget {
         children: [
           BookingItem(
             title: 'Item 1',
+            subtitle: 'item 1',
           ),
         ],
       ),
