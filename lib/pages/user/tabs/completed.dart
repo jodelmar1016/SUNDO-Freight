@@ -12,12 +12,15 @@ class Completed extends StatelessWidget {
         children: [
           BookingItem(
             title: 'Item 1',
+            subtitle: 'item 1',
           ),
           BookingItem(
             title: 'Item 2',
+            subtitle: 'item 2',
           ),
           BookingItem(
             title: 'Item 3',
+            subtitle: 'item 3',
           ),
         ],
       ),

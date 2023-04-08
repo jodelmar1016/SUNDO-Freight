@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:freight/pages/user/selectLocation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:flutter/src/widgets/framework.dart';
+import 'package:freight/functions/compute.dart';
+import 'package:freight/models/bookings.dart';
+import 'package:freight/models/response.dart';
+import 'package:freight/services/dataService.dart';
 
 class BookCargo extends StatefulWidget {
   const BookCargo({super.key});
@@ -29,9 +32,23 @@ class _BookCargoState extends State<BookCargo> {
   _BookCargoState() {
     _dropdownValue = items[0];
   }
-
+  // TYPE OF CARGO
   String? _dropdownValue = '';
   final items = ['Package', 'Solid Bulk', 'Hazardous'];
+
+  double _weight = 0;
+  double _length = 0;
+  double _width = 0;
+  double _height = 0;
+
+  // CONTROLLERS FOR SENDER AND RECEIVER
+  final TextEditingController _senderName = TextEditingController();
+  final TextEditingController _senderContactNo = TextEditingController();
+  final TextEditingController _receiverName = TextEditingController();
+  final TextEditingController _receiverContactNo = TextEditingController();
+
+  // COMPUTER TOTAL FARE
+  Compute newBooking = Compute();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +63,14 @@ class _BookCargoState extends State<BookCargo> {
       onChanged: (val) {
         setState(() {
           _dropdownValue = val as String;
+          if (val == 'Package') {
+            newBooking.bookingFee = .05;
+          } else if (val == 'Solid Bulk') {
+            newBooking.bookingFee = .08;
+          } else if (val == 'Hazardous') {
+            newBooking.bookingFee = .10;
+          }
+          newBooking.getTotal();
         });
       },
       value: _dropdownValue,
@@ -62,6 +87,13 @@ class _BookCargoState extends State<BookCargo> {
 
     // WEIGHT --------------------------------->
     Widget weight = TextFormField(
+      onChanged: (val) {
+        setState(() {
+          newBooking.onWeightChanged(double.parse(val));
+          newBooking.getTotal();
+        });
+      },
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Weight',
@@ -72,6 +104,12 @@ class _BookCargoState extends State<BookCargo> {
 
     // LENGTH --------------------------------->
     Widget length = TextFormField(
+      onChanged: (val) {
+        setState(() {
+          newBooking.length = double.parse(val);
+          newBooking.getTotal();
+        });
+      },
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -83,6 +121,12 @@ class _BookCargoState extends State<BookCargo> {
 
     // WIDTH ---------------------------------->
     Widget width = TextFormField(
+      onChanged: (val) {
+        setState(() {
+          newBooking.width = double.parse(val);
+          newBooking.getTotal();
+        });
+      },
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -94,6 +138,12 @@ class _BookCargoState extends State<BookCargo> {
 
     // HEIGHT --------------------------------->
     Widget height = TextFormField(
+      onChanged: (val) {
+        setState(() {
+          newBooking.height = double.parse(val);
+          newBooking.getTotal();
+        });
+      },
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -136,6 +186,7 @@ class _BookCargoState extends State<BookCargo> {
     );
 
     Widget senderName = TextFormField(
+      controller: _senderName,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Sender Name',
@@ -144,6 +195,7 @@ class _BookCargoState extends State<BookCargo> {
     );
 
     Widget senderContact = TextFormField(
+      controller: _senderContactNo,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Sender Contact Number',
@@ -167,6 +219,7 @@ class _BookCargoState extends State<BookCargo> {
     );
 
     Widget receiverName = TextFormField(
+      controller: _receiverName,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Receiver Name',
@@ -175,6 +228,7 @@ class _BookCargoState extends State<BookCargo> {
     );
 
     Widget receiverContact = TextFormField(
+      controller: _receiverContactNo,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Receiver Contact Number',
@@ -291,7 +345,7 @@ class _BookCargoState extends State<BookCargo> {
                             ),
                           ),
                           Text(
-                            '₱1,000.00',
+                            '₱${newBooking.total}',
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -308,7 +362,25 @@ class _BookCargoState extends State<BookCargo> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Booking createBooking = new Booking(
+                                  origin: _selectOrigin!,
+                                  destination: _selectDestination!,
+                                  type_of_cargo: _dropdownValue!,
+                                  weight: newBooking.weight,
+                                  length: newBooking.length,
+                                  width: newBooking.width,
+                                  height: newBooking.height,
+                                  cost: newBooking.total,
+                                  senderName: _senderName.text,
+                                  senderContactNo: _senderContactNo.text,
+                                  receiverName: _receiverName.text,
+                                  receiverContactNo: _receiverContactNo.text,
+                                );
+                                var result =
+                                    DataService.addBooking(createBooking);
+                                print(result);
+                              },
                               child: Text(
                                 'SUBMIT',
                                 style: TextStyle(fontSize: 18),
