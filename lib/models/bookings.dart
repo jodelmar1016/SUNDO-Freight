@@ -3,6 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Booking {
   LatLng origin;
   LatLng destination;
+  String originName;
+  String destinationName;
   String type_of_cargo;
   double weight;
   double length;
@@ -17,6 +19,8 @@ class Booking {
   Booking({
     required this.origin,
     required this.destination,
+    required this.originName,
+    required this.destinationName,
     required this.type_of_cargo,
     required this.weight,
     required this.length,
