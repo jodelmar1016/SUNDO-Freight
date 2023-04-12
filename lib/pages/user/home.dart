@@ -3,6 +3,8 @@ import 'package:freight/pages/user/bookCargo.dart';
 import 'package:freight/pages/user/myBookings.dart';
 import 'package:freight/pages/user/fare.dart';
 import 'package:freight/router.dart';
+import 'package:freight/pages/user/tracking.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -57,7 +59,20 @@ class Home extends StatelessWidget {
                     // prefixIcon: Icon(Icons.numbers),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
-                      onPressed: () {},
+                      onPressed: () {
+                        LatLng origin =
+                            LatLng(17.65234356992947, 121.74385882644731);
+                        LatLng destination =
+                            LatLng(17.61337898335645, 121.71409369881701);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Tracking(
+                              points: [origin, destination],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     hintText: 'Tracking No.',
                     // hintStyle: TextStyle(color: Colors.teal[800]),
