@@ -5,6 +5,7 @@ import 'package:freight/functions/compute.dart';
 import 'package:freight/models/bookings.dart';
 import 'package:freight/models/response.dart';
 import 'package:freight/services/dataService.dart';
+import 'package:freight/functions/gmap.dart';
 
 class BookCargo extends StatefulWidget {
   const BookCargo({super.key});
@@ -16,14 +17,18 @@ class BookCargo extends StatefulWidget {
 class _BookCargoState extends State<BookCargo> {
   LatLng? _selectOrigin;
   LatLng? _selectDestination;
+  String? placenameOrigin;
+  String? placenameDestination;
 
-  void _handleSelectOrigin(LatLng selectedLatLng) {
+  void _handleSelectOrigin(LatLng selectedLatLng) async {
+    placenameOrigin = await Gmap.getPlaceName(selectedLatLng);
     setState(() {
       _selectOrigin = selectedLatLng;
     });
   }
 
-  void _handleSelectDestination(LatLng selectedLatLng) {
+  void _handleSelectDestination(LatLng selectedLatLng) async {
+    placenameDestination = await Gmap.getPlaceName(selectedLatLng);
     setState(() {
       _selectDestination = selectedLatLng;
     });
@@ -282,9 +287,9 @@ class _BookCargoState extends State<BookCargo> {
                             _handleSelectOrigin(selectedLatLng);
                           }
                         },
-                        title: _selectOrigin == null
+                        title: placenameOrigin == null
                             ? Text('Select Origin')
-                            : Text('$_selectOrigin'),
+                            : Text('$placenameOrigin'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         tileColor: Colors.grey[200],
@@ -308,9 +313,9 @@ class _BookCargoState extends State<BookCargo> {
                             _handleSelectDestination(selectedLatLng);
                           }
                         },
-                        title: _selectDestination == null
+                        title: placenameDestination == null
                             ? Text('Select Destination')
-                            : Text('$_selectDestination'),
+                            : Text('$placenameDestination'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         tileColor: Colors.grey[200],

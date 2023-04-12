@@ -36,7 +36,7 @@ class Gmap {
     return durationText;
   }
 
-  Future<String> getPlaceName(LatLng point) async {
+  static Future<String> getPlaceName(LatLng point) async {
     String url =
         "https://maps.googleapis.com/maps/api/geocode/json?latlng=${point.latitude},${point.longitude}&key=$apiKey";
 
@@ -49,5 +49,6 @@ class Gmap {
     } else {
       return "Unable to find address for the given location";
     }
+    return '';
   }
 }
