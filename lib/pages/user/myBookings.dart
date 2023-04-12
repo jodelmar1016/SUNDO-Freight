@@ -20,13 +20,22 @@ class MyBookings extends StatelessWidget {
             TabBar(
               tabs: [
                 Tab(
-                  child: Text('Processing'),
+                  child: Text(
+                    'Processing',
+                    style: TextStyle(color: Colors.teal),
+                  ),
                 ),
                 Tab(
-                  child: Text('Completed'),
+                  child: Text(
+                    'Completed',
+                    style: TextStyle(color: Colors.teal),
+                  ),
                 ),
                 Tab(
-                  child: Text('Cancelled'),
+                  child: Text(
+                    'Cancelled',
+                    style: TextStyle(color: Colors.teal),
+                  ),
                 )
               ],
             ),

@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
       height: 220,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
-        color: Colors.orangeAccent,
+        color: Colors.teal,
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,12 +29,14 @@ class Home extends StatelessWidget {
                 Text(
                   'Welcome',
                   style: TextStyle(
+                    color: Colors.teal[50],
                     fontSize: 40,
                   ),
                 ),
                 Text(
                   'Simplifying Logistics in the digital age',
                   style: TextStyle(
+                    color: Colors.teal[50],
                     fontSize: 18,
                   ),
                 ),
@@ -43,7 +45,12 @@ class Home extends StatelessWidget {
             SizedBox(height: 10),
             Column(
               children: [
-                Text('Track your Cargo'),
+                Text(
+                  'Track your Cargo',
+                  style: TextStyle(
+                    color: Colors.teal[50],
+                  ),
+                ),
                 SizedBox(height: 5),
                 TextField(
                   decoration: InputDecoration(
@@ -53,15 +60,17 @@ class Home extends StatelessWidget {
                       onPressed: () {},
                     ),
                     hintText: 'Tracking No.',
+                    // hintStyle: TextStyle(color: Colors.teal[800]),
                     filled: true,
-                    fillColor: Colors.orange[200],
+                    fillColor: Colors.teal[100],
                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide(width: 1),
+                      borderSide: BorderSide(width: 0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide(width: 0),
                     ),
                   ),
                 )
@@ -94,7 +103,7 @@ class Home extends StatelessWidget {
                   Icon(
                     Icons.add_box_rounded,
                     size: 30,
-                    color: Colors.orangeAccent,
+                    color: Colors.teal,
                   ),
                   Text(
                     'Book Cargo',
@@ -122,7 +131,7 @@ class Home extends StatelessWidget {
                   Icon(
                     Icons.paste,
                     size: 30,
-                    color: Colors.orangeAccent,
+                    color: Colors.teal,
                   ),
                   Text(
                     'My Bookings',
@@ -150,7 +159,7 @@ class Home extends StatelessWidget {
                   Icon(
                     Icons.calculate_rounded,
                     size: 30,
-                    color: Colors.orangeAccent,
+                    color: Colors.teal,
                   ),
                   Text(
                     'Fare',
