@@ -371,6 +371,8 @@ class _BookCargoState extends State<BookCargo> {
                                 Booking createBooking = new Booking(
                                   origin: _selectOrigin!,
                                   destination: _selectDestination!,
+                                  originName: placenameOrigin!,
+                                  destinationName: placenameDestination!,
                                   type_of_cargo: _dropdownValue!,
                                   weight: newBooking.weight,
                                   length: newBooking.length,
