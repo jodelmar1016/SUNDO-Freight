@@ -72,7 +72,7 @@ class _TrackingState extends State<Tracking> {
             child: GoogleMap(
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
-                target: LatLng(17.660759658795374, 121.74708318638257),
+                target: origin,
                 zoom: 14,
               ),
               markers: {

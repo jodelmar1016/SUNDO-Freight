@@ -44,6 +44,8 @@ class DataService {
     Map<String, dynamic> data = <String, dynamic>{
       'origin': origin,
       'destination': destination,
+      'origin_name': newBooking.originName,
+      'destination_name': newBooking.destinationName,
       'type_of_cargo': newBooking.type_of_cargo,
       'weight': newBooking.weight,
       'length': newBooking.length,

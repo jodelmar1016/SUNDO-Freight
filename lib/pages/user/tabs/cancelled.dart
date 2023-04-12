@@ -9,12 +9,7 @@ class Cancelled extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView(
-        children: [
-          BookingItem(
-            title: 'Item 1',
-            subtitle: 'item 1',
-          ),
-        ],
+        children: [],
       ),
     );
   }
