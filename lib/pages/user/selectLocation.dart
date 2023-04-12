@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:freight/functions/gmap.dart';
 
 class SelectLocation extends StatefulWidget {
   const SelectLocation({super.key});
@@ -12,6 +13,7 @@ class SelectLocation extends StatefulWidget {
 
 class _SelectLocationState extends State<SelectLocation> {
   LatLng _selectedLatLng = LatLng(0, 0);
+  String placename = '';
 
   Marker _marker = Marker(
     markerId: MarkerId('myMarker'),
@@ -21,7 +23,8 @@ class _SelectLocationState extends State<SelectLocation> {
   );
 
   // Tap on the map and update the position of the markker
-  void _onMapTap(LatLng latLng) {
+  void _onMapTap(LatLng latLng) async {
+    placename = await Gmap.getPlaceName(latLng);
     setState(() {
       _marker = _marker.copyWith(positionParam: latLng);
       _selectedLatLng = latLng;
@@ -49,11 +52,13 @@ class _SelectLocationState extends State<SelectLocation> {
         Container(
           child: Column(
             children: [
-              Text('Latitude: ${_selectedLatLng.latitude}'),
-              Text('Longitude: ${_selectedLatLng.longitude}'),
+              Text('Place: $placename'),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context, _selectedLatLng);
+                  Navigator.pop(
+                    context,
+                    _selectedLatLng,
+                  );
                 },
                 child: Column(children: [Text('SELECT')]),
               ),
