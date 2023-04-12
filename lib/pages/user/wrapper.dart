@@ -15,10 +15,10 @@ class _WrapperState extends State<Wrapper> {
   int _currentIndex = 0;
   List<Widget> _body = [Home(), NotificationPage(), Profile()];
   List<Widget> _appBarTitle = [
-    Icon(
-      Icons.car_crash,
-      size: 50,
+    Image.asset(
+      'assets/logo-text.png',
       color: Colors.teal,
+      width: 180,
     ),
     Text('N O T I F I C A T I O N'),
     Text('P R O F I L E')

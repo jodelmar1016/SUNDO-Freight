@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freight/pages/user/wrapper.dart';
 import 'package:freight/pages/admin/dashboard.dart';
 import 'package:freight/router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -49,19 +50,23 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/cargo.png',
+              'assets/logo.png',
               fit: BoxFit.fill,
-              width: 300,
+              width: 200,
             ),
-            const Text(
-              'eCarga',
-              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+            // SizedBox(height: 10),
+            Text(
+              'E C A R G A',
+              style: GoogleFonts.oswald(
+                color: Colors.teal[800],
+                fontSize: 50,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
