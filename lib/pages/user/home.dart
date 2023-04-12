@@ -223,7 +223,7 @@ class Home extends StatelessWidget {
       child: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
