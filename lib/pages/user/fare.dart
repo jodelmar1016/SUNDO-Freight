@@ -44,7 +44,7 @@ class _FareState extends State<Fare> {
       value: _dropdownValue,
       icon: Icon(
         Icons.arrow_drop_down_circle,
-        color: Colors.orangeAccent,
+        color: Colors.teal,
       ),
       decoration: InputDecoration(
         labelText: "Type of Cargo",
@@ -193,7 +193,7 @@ class _FareState extends State<Fare> {
                         tileColor: Colors.grey[200],
                         leading: Icon(
                           Icons.circle_outlined,
-                          color: Colors.redAccent,
+                          color: Colors.teal,
                         ),
                         trailing: Icon(Icons.arrow_right_sharp),
                         title: Text('Select Origin'),
@@ -205,7 +205,7 @@ class _FareState extends State<Fare> {
                         tileColor: Colors.grey[200],
                         leading: Icon(
                           Icons.location_pin,
-                          color: Colors.redAccent,
+                          color: Colors.teal,
                         ),
                         trailing: Icon(Icons.arrow_right_sharp),
                         title: Text('Select Destination'),

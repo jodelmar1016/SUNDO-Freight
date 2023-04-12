@@ -16,20 +16,16 @@ class _WrapperState extends State<Wrapper> {
   List<Widget> _body = [Home(), NotificationPage(), Profile()];
   List<Widget> _appBarTitle = [
     Icon(
-      Icons.flutter_dash,
+      Icons.car_crash,
       size: 50,
-      color: Colors.orange,
+      color: Colors.teal,
     ),
     Text('N O T I F I C A T I O N'),
     Text('P R O F I L E')
   ];
   List<bool> _centerTitle = [false, true, true];
   // List<String> _appBarTitle = ['', 'NOTIFICATION', 'PROFILE'];
-  List<Color> _colors = [
-    Colors.transparent,
-    Colors.orangeAccent,
-    Colors.orangeAccent
-  ];
+  List<Color> _colors = [Colors.transparent, Colors.teal, Colors.teal];
 
   @override
   Widget build(BuildContext context) {
