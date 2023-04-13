@@ -50,25 +50,13 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/logo.png',
-              fit: BoxFit.fill,
-              width: 200,
-            ),
-            // SizedBox(height: 10),
-            Text(
-              'E C A R G A',
-              style: GoogleFonts.oswald(
-                color: Colors.teal[800],
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+        child: Image.asset(
+          'assets/logo-text.png',
+          fit: BoxFit.fill,
+          width: 300,
+          color: Colors.white,
         ),
       ),
     );
