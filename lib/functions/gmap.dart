@@ -5,7 +5,7 @@ import 'dart:convert';
 class Gmap {
   static String apiKey = 'AIzaSyCc7-GEEUjHx-yM0yClaSAmsuWH7H7wfck';
 
-  static Future<String> getDistance(LatLng origin, LatLng destination) async {
+  static Future<double> getDistance(LatLng origin, LatLng destination) async {
     String url =
         "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.latitude},${origin.longitude}&destinations=${destination.latitude},${destination.longitude}&key=$apiKey";
 
@@ -17,8 +17,7 @@ class Gmap {
     double distanceValue = jsonResponse["rows"][0]["elements"][0]["distance"]
             ["value"] /
         1000; // Convert meters to kilometers
-
-    return distanceText;
+    return distanceValue;
   }
 
   static Future<String> getDuration(LatLng origin, LatLng destination) async {
