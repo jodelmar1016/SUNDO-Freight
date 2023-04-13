@@ -19,20 +19,7 @@ class _BookCargoState extends State<BookCargo> {
   LatLng? _selectDestination;
   String? placenameOrigin;
   String? placenameDestination;
-
-  void _handleSelectOrigin(LatLng selectedLatLng) async {
-    placenameOrigin = await Gmap.getPlaceName(selectedLatLng);
-    setState(() {
-      _selectOrigin = selectedLatLng;
-    });
-  }
-
-  void _handleSelectDestination(LatLng selectedLatLng) async {
-    placenameDestination = await Gmap.getPlaceName(selectedLatLng);
-    setState(() {
-      _selectDestination = selectedLatLng;
-    });
-  }
+  double distance = 0;
 
   _BookCargoState() {
     _dropdownValue = items[0];
@@ -52,7 +39,7 @@ class _BookCargoState extends State<BookCargo> {
   final TextEditingController _receiverName = TextEditingController();
   final TextEditingController _receiverContactNo = TextEditingController();
 
-  // COMPUTER TOTAL FARE
+  // COMPUTE TOTAL FARE
   Compute newBooking = Compute();
 
   @override
@@ -284,8 +271,25 @@ class _BookCargoState extends State<BookCargo> {
                           );
 
                           if (selectedLatLng != null) {
-                            _handleSelectOrigin(selectedLatLng);
+                            String temp =
+                                await Gmap.getPlaceName(selectedLatLng);
+
+                            setState(() {
+                              placenameOrigin = temp;
+                              _selectOrigin = selectedLatLng;
+                            });
+
+                            if (_selectOrigin != null &&
+                                _selectDestination != null) {
+                              double val = await Gmap.getDistance(
+                                  _selectOrigin!, _selectDestination!);
+                              setState(() {
+                                distance = val;
+                              });
+                            }
                           }
+                          newBooking.distance = distance;
+                          newBooking.getTotal();
                         },
                         title: placenameOrigin == null
                             ? Text('Select Origin')
@@ -310,8 +314,25 @@ class _BookCargoState extends State<BookCargo> {
                           );
 
                           if (selectedLatLng != null) {
-                            _handleSelectDestination(selectedLatLng);
+                            String temp =
+                                await Gmap.getPlaceName(selectedLatLng);
+
+                            setState(() {
+                              placenameDestination = temp;
+                              _selectDestination = selectedLatLng;
+                            });
+
+                            if (_selectOrigin != null &&
+                                _selectDestination != null) {
+                              double val = await Gmap.getDistance(
+                                  _selectOrigin!, _selectDestination!);
+                              setState(() {
+                                distance = val;
+                              });
+                            }
                           }
+                          newBooking.distance = distance;
+                          newBooking.getTotal();
                         },
                         title: placenameDestination == null
                             ? Text('Select Destination')
@@ -325,6 +346,7 @@ class _BookCargoState extends State<BookCargo> {
                         ),
                         trailing: Icon(Icons.arrow_right_sharp),
                       ),
+                      Text('$distance km'),
                       SizedBox(height: 10),
                       cargoInformation,
                       SizedBox(height: 10),
@@ -350,7 +372,7 @@ class _BookCargoState extends State<BookCargo> {
                             ),
                           ),
                           Text(
-                            '₱${newBooking.total}',
+                            '₱${newBooking.total.toStringAsFixed(2)}',
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -367,7 +389,7 @@ class _BookCargoState extends State<BookCargo> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 Booking createBooking = new Booking(
                                   origin: _selectOrigin!,
                                   destination: _selectDestination!,
@@ -386,7 +408,6 @@ class _BookCargoState extends State<BookCargo> {
                                 );
                                 var result =
                                     DataService.addBooking(createBooking);
-                                print(result);
                               },
                               child: Text(
                                 'SUBMIT',

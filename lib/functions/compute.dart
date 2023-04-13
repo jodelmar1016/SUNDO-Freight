@@ -1,5 +1,5 @@
 class Compute {
-  double distance = 10; // TEMPORARY
+  double distance = 0;
   double weight = 0;
   double length = 0;
   double width = 0;
