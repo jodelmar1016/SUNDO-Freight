@@ -3,6 +3,7 @@ import 'package:freight/pages/user/wrapper.dart';
 import 'package:freight/pages/admin/dashboard.dart';
 import 'package:freight/router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:freight/authentication/login.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -22,7 +23,7 @@ class _SplashState extends State<Splash> {
     await Future.delayed(
       Duration(milliseconds: 1500),
       () {
-        Navigator.pushReplacement(context, MyPageRouter(page: Wrapper()));
+        Navigator.pushReplacement(context, MyPageRouter(page: Login()));
       },
     );
   }
