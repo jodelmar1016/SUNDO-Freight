@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freight/functions/gmap.dart';
-import 'package:freight/pages/user/tracking.dart';
+import 'package:freight/pages/tracking.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BookingItem extends StatelessWidget {

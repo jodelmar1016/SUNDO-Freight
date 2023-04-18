@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freight/pages/user/selectLocation.dart';
+import 'package:freight/pages/selectLocation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:freight/functions/compute.dart';
 import 'package:freight/models/bookings.dart';

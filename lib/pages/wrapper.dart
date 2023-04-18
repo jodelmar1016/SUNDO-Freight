@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:freight/pages/user/home.dart';
-import 'package:freight/pages/user/notification.dart';
-import 'package:freight/pages/user/profile.dart';
+import 'package:freight/pages/home.dart';
+import 'package:freight/pages/notification.dart';
+import 'package:freight/pages/profile.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});

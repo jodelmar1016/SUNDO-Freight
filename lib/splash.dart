@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freight/pages/user/wrapper.dart';
-import 'package:freight/pages/admin/dashboard.dart';
+import 'package:freight/pages/wrapper.dart';
 import 'package:freight/router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:freight/authentication/login.dart';
