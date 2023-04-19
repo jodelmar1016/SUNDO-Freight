@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 
 class MyPageRouter extends PageRouteBuilder {
   final Widget page;
+  final Offset begin;
+  final int duration;
 
-  MyPageRouter({required this.page})
-      : super(
+  MyPageRouter({
+    required this.page,
+    required this.begin,
+    required this.duration,
+  }) : super(
           pageBuilder: (context, animation, secondaryAnimation) => page,
-          transitionDuration: Duration(milliseconds: 1000),
+          transitionDuration: Duration(milliseconds: duration),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.1, 1.0);
-            const end = Offset.zero;
-            const curve = Curves.ease;
-
-            var tween =
-                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
             return SlideTransition(
-              position: animation.drive(tween),
+              position: Tween<Offset>(
+                begin: begin,
+                end: Offset.zero,
+              ).animate(animation),
               child: child,
             );
           },
