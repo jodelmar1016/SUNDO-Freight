@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:freight/pages/selectLocation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:freight/functions/compute.dart';
+// import 'package:freight/functions/compute.dart';
 import 'package:freight/models/bookings.dart';
 import 'package:freight/models/response.dart';
 import 'package:freight/services/dataService.dart';
 import 'package:freight/functions/gmap.dart';
+import 'package:freight/functions/testCompute.dart';
 
 class BookCargo extends StatefulWidget {
   const BookCargo({super.key});
@@ -19,15 +20,11 @@ class _BookCargoState extends State<BookCargo> {
   LatLng? _selectDestination;
   String? placenameOrigin;
   String? placenameDestination;
+
+  String? _dropdownValue = 'Select';
+  List<String> items = ['Package', 'Solid Bulk', 'Hazardous'];
+
   double distance = 0;
-
-  _BookCargoState() {
-    _dropdownValue = items[0];
-  }
-  // TYPE OF CARGO
-  String? _dropdownValue = '';
-  final items = ['Package', 'Solid Bulk', 'Hazardous'];
-
   double _weight = 0;
   double _length = 0;
   double _width = 0;
@@ -41,6 +38,19 @@ class _BookCargoState extends State<BookCargo> {
 
   // COMPUTE TOTAL FARE
   Compute newBooking = Compute();
+
+  getTotalBookingCost() {
+    if (distance != 0 &&
+        _weight != 0 &&
+        _length != 0 &&
+        _width != 0 &&
+        _height != 0) {
+      newBooking.getTypeOfVehicle();
+      newBooking.getBasePrice();
+      newBooking.getBookingFee();
+      newBooking.getTotal();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +66,19 @@ class _BookCargoState extends State<BookCargo> {
         setState(() {
           _dropdownValue = val as String;
           if (val == 'Package') {
-            newBooking.bookingFee = .05;
+            newBooking.cargoType = TypeOfCargo.package;
+            getTotalBookingCost();
           } else if (val == 'Solid Bulk') {
-            newBooking.bookingFee = .08;
+            newBooking.cargoType = TypeOfCargo.solidBulk;
+            getTotalBookingCost();
           } else if (val == 'Hazardous') {
-            newBooking.bookingFee = .10;
+            newBooking.cargoType = TypeOfCargo.hazardous;
+            getTotalBookingCost();
           }
-          newBooking.getTotal();
         });
       },
-      value: _dropdownValue,
+      value: _dropdownValue == 'Select' ? null : _dropdownValue,
+      hint: Text(_dropdownValue!),
       icon: Icon(
         Icons.arrow_drop_down_circle,
         color: Colors.teal,
@@ -75,14 +88,21 @@ class _BookCargoState extends State<BookCargo> {
         border: OutlineInputBorder(),
         contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       ),
+      validator: (value) {
+        if (value == null) {
+          return 'Please select an option';
+        }
+        return null;
+      },
     );
 
     // WEIGHT --------------------------------->
     Widget weight = TextFormField(
       onChanged: (val) {
         setState(() {
-          newBooking.onWeightChanged(double.parse(val));
-          newBooking.getTotal();
+          _weight = double.parse(val);
+          newBooking.weight = double.parse(val);
+          getTotalBookingCost();
         });
       },
       keyboardType: TextInputType.number,
@@ -98,15 +118,16 @@ class _BookCargoState extends State<BookCargo> {
     Widget length = TextFormField(
       onChanged: (val) {
         setState(() {
+          _length = double.parse(val);
           newBooking.length = double.parse(val);
-          newBooking.getTotal();
+          getTotalBookingCost();
         });
       },
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Length',
-        suffixText: 'cm',
+        suffixText: 'ft',
         contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       ),
     );
@@ -115,15 +136,16 @@ class _BookCargoState extends State<BookCargo> {
     Widget width = TextFormField(
       onChanged: (val) {
         setState(() {
+          _width = double.parse(val);
           newBooking.width = double.parse(val);
-          newBooking.getTotal();
+          getTotalBookingCost();
         });
       },
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Width',
-        suffixText: 'cm',
+        suffixText: 'ft',
         contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       ),
     );
@@ -132,15 +154,16 @@ class _BookCargoState extends State<BookCargo> {
     Widget height = TextFormField(
       onChanged: (val) {
         setState(() {
+          _height = double.parse(val);
           newBooking.height = double.parse(val);
-          newBooking.getTotal();
+          getTotalBookingCost();
         });
       },
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Height',
-        suffixText: 'cm',
+        suffixText: 'ft',
         contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       ),
     );
@@ -263,6 +286,7 @@ class _BookCargoState extends State<BookCargo> {
                     children: [
                       ListTile(
                         onTap: () async {
+                          // GO TO SELECT LOCATION
                           final selectedLatLng = await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -271,6 +295,7 @@ class _BookCargoState extends State<BookCargo> {
                           );
 
                           if (selectedLatLng != null) {
+                            // GET THE NAME OF THE PLACE BASE ON LATLNG
                             String temp =
                                 await Gmap.getPlaceName(selectedLatLng);
 
@@ -279,6 +304,7 @@ class _BookCargoState extends State<BookCargo> {
                               _selectOrigin = selectedLatLng;
                             });
 
+                            // DISPLAY THE DISTANCE
                             if (_selectOrigin != null &&
                                 _selectDestination != null) {
                               double val = await Gmap.getDistance(
@@ -288,8 +314,9 @@ class _BookCargoState extends State<BookCargo> {
                               });
                             }
                           }
+                          // SET DISTANCE FOR COMPUTATION
                           newBooking.distance = distance;
-                          newBooking.getTotal();
+                          getTotalBookingCost();
                         },
                         title: placenameOrigin == null
                             ? Text('Select Origin')
@@ -306,6 +333,7 @@ class _BookCargoState extends State<BookCargo> {
                       SizedBox(height: 10),
                       ListTile(
                         onTap: () async {
+                          // GET THE NAME OF THE PLACE BASE ON LATLNG
                           final selectedLatLng = await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -322,6 +350,7 @@ class _BookCargoState extends State<BookCargo> {
                               _selectDestination = selectedLatLng;
                             });
 
+                            // DISPLAY THE DISTANCE
                             if (_selectOrigin != null &&
                                 _selectDestination != null) {
                               double val = await Gmap.getDistance(
@@ -331,8 +360,9 @@ class _BookCargoState extends State<BookCargo> {
                               });
                             }
                           }
+                          // SET DISTANCE FOR COMPUTATION
                           newBooking.distance = distance;
-                          newBooking.getTotal();
+                          getTotalBookingCost();
                         },
                         title: placenameDestination == null
                             ? Text('Select Destination')
@@ -372,7 +402,7 @@ class _BookCargoState extends State<BookCargo> {
                             ),
                           ),
                           Text(
-                            '₱${newBooking.total.toStringAsFixed(2)}',
+                            '₱${newBooking.totalBookingCostwithFee.toStringAsFixed(2)}',
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -396,16 +426,22 @@ class _BookCargoState extends State<BookCargo> {
                                   originName: placenameOrigin!,
                                   destinationName: placenameDestination!,
                                   type_of_cargo: _dropdownValue!,
+                                  type_of_vehicle: newBooking.vehicleType
+                                      .toString()
+                                      .split('.')[1],
                                   weight: newBooking.weight,
                                   length: newBooking.length,
                                   width: newBooking.width,
                                   height: newBooking.height,
-                                  cost: newBooking.total,
+                                  cost: newBooking.totalBookingCost,
+                                  costWithFee:
+                                      newBooking.totalBookingCostwithFee,
                                   senderName: _senderName.text,
                                   senderContactNo: _senderContactNo.text,
                                   receiverName: _receiverName.text,
                                   receiverContactNo: _receiverContactNo.text,
                                 );
+                                // INSERT TO FIREBASE
                                 var result =
                                     DataService.addBooking(createBooking);
                               },
