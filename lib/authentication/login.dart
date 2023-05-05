@@ -4,6 +4,7 @@ import 'package:freight/pages/wrapper.dart';
 import 'package:freight/router.dart';
 import 'dart:async';
 import 'package:freight/services/auth.dart';
+import 'package:freight/authentication/registration.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -154,7 +155,14 @@ class _LoginState extends State<Login> {
                     children: [
                       Text('Does not have an account yet?'),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Registration(),
+                            ),
+                          );
+                        },
                         child: Text('SIGN UP'),
                       ),
                     ],

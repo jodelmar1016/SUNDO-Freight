@@ -43,19 +43,37 @@ class AuthService {
     }
   }
 
-  // Future registerEmailPassword(String email, String password) async {
-  //   try {
-  //     UserCredential userCredential = await FirebaseAuth.instance
-  //         .createUserWithEmailAndPassword(
-  //             email: email.toString(), password: password.toString());
-  //     User? user = userCredential.user;
-  //     return _firebaseUser(user);
-  //   } on FirebaseAuthException catch (e) {
-  //     return FirebaseUser(code: e.code, uid: null);
-  //   } catch (e) {
-  //     return FirebaseUser(code: e.toString(), uid: null);
-  //   }
-  // }
+  Future<Response> registerEmailPassword(
+    String firstName,
+    String lastName,
+    String email,
+    String password,
+  ) async {
+    Response response = new Response();
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: email.toString(), password: password.toString());
+
+      User? user = userCredential.user;
+      if (user != null) {
+        await user.updateDisplayName(
+            firstName.toString() + ' ' + lastName.toString());
+        await user.reload();
+        user = await _auth.currentUser;
+      }
+
+      response.code = 200;
+      response.message = 'Account Created, you can now Login';
+      return response;
+      // User? user = userCredential.user;
+      // return _firebaseUser(user);
+    } on FirebaseAuthException catch (e) {
+      response.code = 500;
+      response.message = e.code;
+      return response;
+    }
+  }
 
   Future signOut() async {
     try {
