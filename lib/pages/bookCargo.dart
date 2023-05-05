@@ -6,7 +6,7 @@ import 'package:freight/models/bookings.dart';
 import 'package:freight/models/response.dart';
 import 'package:freight/services/dataService.dart';
 import 'package:freight/functions/gmap.dart';
-import 'package:freight/functions/testCompute.dart';
+import 'package:freight/functions/compute.dart';
 
 class BookCargo extends StatefulWidget {
   const BookCargo({super.key});
@@ -50,6 +50,15 @@ class _BookCargoState extends State<BookCargo> {
       newBooking.getBookingFee();
       newBooking.getTotal();
     }
+  }
+
+  @override
+  void dispose() {
+    _senderName.dispose();
+    _senderContactNo.dispose();
+    _receiverName.dispose();
+    _receiverContactNo.dispose();
+    super.dispose();
   }
 
   @override
