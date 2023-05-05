@@ -6,11 +6,13 @@ class Booking {
   String originName;
   String destinationName;
   String type_of_cargo;
+  String type_of_vehicle;
   double weight;
   double length;
   double width;
   double height;
   double cost;
+  double costWithFee;
   String senderName;
   String senderContactNo;
   String receiverName;
@@ -22,11 +24,13 @@ class Booking {
     required this.originName,
     required this.destinationName,
     required this.type_of_cargo,
+    required this.type_of_vehicle,
     required this.weight,
     required this.length,
     required this.width,
     required this.height,
     required this.cost,
+    required this.costWithFee,
     required this.senderName,
     required this.senderContactNo,
     required this.receiverName,
