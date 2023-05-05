@@ -29,6 +29,7 @@ class DataService {
   // }
 
   static Future<Response> addBooking(Booking newBooking) async {
+    // CONVERT THE LATLNG TO GEOPOINT
     GeoPoint origin = GeoPoint(
       newBooking.origin.latitude,
       newBooking.origin.longitude,
@@ -47,11 +48,13 @@ class DataService {
       'origin_name': newBooking.originName,
       'destination_name': newBooking.destinationName,
       'type_of_cargo': newBooking.type_of_cargo,
+      'type_of_vehicle': newBooking.type_of_vehicle,
       'weight': newBooking.weight,
       'length': newBooking.length,
       'width': newBooking.width,
       'height': newBooking.height,
       'cost': newBooking.cost,
+      'cost_with_fee': newBooking.costWithFee,
       'sender_name': newBooking.senderName,
       'sender_contact_no': newBooking.senderContactNo,
       'receiver_name': newBooking.receiverName,
