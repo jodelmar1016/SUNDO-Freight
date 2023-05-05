@@ -57,8 +57,8 @@ class _FareState extends State<Fare> {
     Widget weight = TextFormField(
       onChanged: (val) {
         setState(() {
-          newBooking.onWeightChanged(double.parse(val));
-          newBooking.getTotal();
+          // newBooking.onWeightChanged(double.parse(val));
+          // newBooking.getTotal();
         });
       },
       keyboardType: TextInputType.number,
@@ -231,7 +231,8 @@ class _FareState extends State<Fare> {
                               ),
                             ),
                             Text(
-                              '₱${newBooking.total}',
+                              '₱0.0',
+                              // '₱${newBooking.total}',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
