@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "713056754667",
-    "project_id": "ecarga-95339",
-    "storage_bucket": "ecarga-95339.appspot.com"
+    "project_number": "806634445034",
+    "project_id": "ezycarga",
+    "storage_bucket": "ezycarga.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:713056754667:android:5eedd33c27e4025e2817ae",
+        "mobilesdk_app_id": "1:806634445034:android:eb95011fb3395dfa8adf93",
         "android_client_info": {
-          "package_name": "com.ecarga.sundo"
+          "package_name": "com.ezyCarga.sundo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "713056754667-q177am0jqh4iua1e4m5clqfjrbga6n8k.apps.googleusercontent.com",
+          "client_id": "806634445034-g8qn7m2bo4566cucrhmepdd78eac225c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDHUC_qEJJviZOBfCncq_bjNywYr1ephPc"
+          "current_key": "AIzaSyCL4gttqB0DqIgSvKZZ2xZaOYuLPDcGbV4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "713056754667-q177am0jqh4iua1e4m5clqfjrbga6n8k.apps.googleusercontent.com",
+              "client_id": "806634445034-g8qn7m2bo4566cucrhmepdd78eac225c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
