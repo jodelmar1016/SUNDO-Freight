@@ -6,60 +6,12 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _collection = _firestore.collection('bookings');
 
 class DataService {
-  // static Response addBookings() {
-  //   Response response = Response();
-  //   response.code = 500;
-  //   response.message = 'FAILED';
-  //   return response;
-  // }
-
-  // static test(Booking newBooking) {
-  //   print(newBooking.origin);
-  //   print(newBooking.destination);
-  //   print(newBooking.type_of_cargo);
-  //   print(newBooking.weight);
-  //   print(newBooking.length);
-  //   print(newBooking.width);
-  //   print(newBooking.height);
-  //   print(newBooking.cost);
-  //   print(newBooking.senderName);
-  //   print(newBooking.senderContactNo);
-  //   print(newBooking.receiverName);
-  //   print(newBooking.receiverContactNo);
-  // }
-
+  // ADD BOOKING
   static Future<Response> addBooking(Booking newBooking) async {
-    // CONVERT THE LATLNG TO GEOPOINT
-    GeoPoint origin = GeoPoint(
-      newBooking.origin.latitude,
-      newBooking.origin.longitude,
-    );
-    GeoPoint destination = GeoPoint(
-      newBooking.destination.latitude,
-      newBooking.destination.longitude,
-    );
-
     Response response = new Response();
     DocumentReference documentReferencer = _collection.doc();
 
-    Map<String, dynamic> data = <String, dynamic>{
-      'origin': origin,
-      'destination': destination,
-      'origin_name': newBooking.originName,
-      'destination_name': newBooking.destinationName,
-      'type_of_cargo': newBooking.type_of_cargo,
-      'type_of_vehicle': newBooking.type_of_vehicle,
-      'weight': newBooking.weight,
-      'length': newBooking.length,
-      'width': newBooking.width,
-      'height': newBooking.height,
-      'cost': newBooking.cost,
-      'cost_with_fee': newBooking.costWithFee,
-      'sender_name': newBooking.senderName,
-      'sender_contact_no': newBooking.senderContactNo,
-      'receiver_name': newBooking.receiverName,
-      'receiver_contact_no': newBooking.receiverContactNo,
-    };
+    Map<String, dynamic> data = newBooking.convertToMap();
 
     var result = await documentReferencer.set(data).whenComplete(() {
       response.code = 200;
