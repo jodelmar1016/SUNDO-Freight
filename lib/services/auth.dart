@@ -46,8 +46,12 @@ class AuthService {
               email: emailTemp.toString(), password: password.toString());
       User? user = userCredential.user;
 
+      // STORE UID IN SHAREDPREFERENCES
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('uid', user!.uid);
+      await prefs.setString('userId', user!.uid);
+      await prefs.setString('userName', user.displayName.toString());
+      await prefs.setString('userEmail', user.email.toString());
+
       response.code = 200;
       response.message = 'Successfully Login';
       return response;
