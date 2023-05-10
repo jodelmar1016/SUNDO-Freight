@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freight/pages/tabs/processing.dart';
+import 'package:freight/pages/tabs/inTransit.dart';
 import 'package:freight/pages/tabs/completed.dart';
 import 'package:freight/pages/tabs/cancelled.dart';
 
@@ -9,7 +10,7 @@ class MyBookings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text('My Bookings'),
@@ -22,6 +23,12 @@ class MyBookings extends StatelessWidget {
                 Tab(
                   child: Text(
                     'Processing',
+                    style: TextStyle(color: Colors.teal),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'In Transit',
                     style: TextStyle(color: Colors.teal),
                   ),
                 ),
@@ -43,6 +50,7 @@ class MyBookings extends StatelessWidget {
               child: TabBarView(
                 children: [
                   Processing(),
+                  InTransit(),
                   Completed(),
                   Cancelled(),
                 ],
