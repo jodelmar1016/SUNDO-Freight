@@ -449,6 +449,7 @@ class _BookCargoState extends State<BookCargo> {
                                   senderContactNo: _senderContactNo.text,
                                   receiverName: _receiverName.text,
                                   receiverContactNo: _receiverContactNo.text,
+                                  status: 'processing',
                                 );
                                 // INSERT TO FIREBASE
                                 var result =
