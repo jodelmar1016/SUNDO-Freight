@@ -24,16 +24,12 @@ class DataService {
     return response;
   }
 
-  static Stream<QuerySnapshot> readBookings() {
+  static Stream<QuerySnapshot> readBookings(status) {
     CollectionReference bookingItemCollection = _collection;
+    bookingItemCollection.get();
 
-    bookingItemCollection.get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((DocumentSnapshot doc) {
-        print(doc.data());
-      });
-    });
-
-    return bookingItemCollection.snapshots();
+    Query query = bookingItemCollection.where('status', isEqualTo: status);
+    return query.snapshots();
   }
   // For future purposes
   // static printDocument() async {
