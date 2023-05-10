@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Booking {
+  String? docId;
   LatLng? origin;
   LatLng? destination;
   String? originName;
@@ -20,7 +21,9 @@ class Booking {
   String? receiverContactNo;
   String? paymentMethod;
   String? driverId;
+  String? status;
   bool waiting = true;
+  String? trackingNo;
 
   Booking({
     this.origin,
@@ -40,7 +43,7 @@ class Booking {
     this.receiverName,
     this.receiverContactNo,
     this.paymentMethod,
-    this.driverId,
+    this.status,
   });
 
   display() {
@@ -83,6 +86,7 @@ class Booking {
       'receiver_contact_no': receiverContactNo,
       'payment_method': paymentMethod,
       'waiting': waiting,
+      'status': status,
     };
   }
 }
