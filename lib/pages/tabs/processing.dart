@@ -13,7 +13,8 @@ class Processing extends StatefulWidget {
 }
 
 class _ProcessingState extends State<Processing> {
-  final Stream<QuerySnapshot> collectionReference = DataService.readBookings();
+  final Stream<QuerySnapshot> collectionReference =
+      DataService.readBookings('processing');
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
