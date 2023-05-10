@@ -69,7 +69,7 @@ class _SplashState extends State<Splash> {
       backgroundColor: Colors.teal,
       body: Center(
         child: Image.asset(
-          'assets/logo-text.png',
+          'assets/splash.gif',
           fit: BoxFit.fill,
           width: 300,
           color: Colors.white,
