@@ -5,16 +5,16 @@ import 'package:freight/services/dataService.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:freight/functions/gmap.dart';
 
-class Processing extends StatefulWidget {
-  const Processing({super.key});
+class InTransit extends StatefulWidget {
+  const InTransit({super.key});
 
   @override
-  State<Processing> createState() => _ProcessingState();
+  State<InTransit> createState() => _InTransitState();
 }
 
-class _ProcessingState extends State<Processing> {
+class _InTransitState extends State<InTransit> {
   final Stream<QuerySnapshot> collectionReference =
-      DataService.readBookings('processing');
+      DataService.readBookings('in transit');
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
