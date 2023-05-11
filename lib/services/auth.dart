@@ -29,31 +29,31 @@ class AuthService {
 
   Future<Response> signInEmailPassword(String email, String password) async {
     Response response = new Response();
-    String emailTemp = email;
     try {
-      // GET ROLE
-      QuerySnapshot querySnapshot = await _collection
-          .where('email', isEqualTo: email)
-          .where('role', isEqualTo: 'User')
-          .get();
+      // CHECK IF ACCOUNT EXIST IN USERS
+      QuerySnapshot querySnapshot =
+          await _collection.where('email', isEqualTo: email).get();
       print(querySnapshot.docs.length);
-      if (!querySnapshot.docs.isNotEmpty) {
-        emailTemp = "unknown@gmail.com";
+
+      if (querySnapshot.docs.isNotEmpty) {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: email.toString(), password: password.toString());
+        User? user = userCredential.user;
+
+        // STORE UID IN SHAREDPREFERENCES
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userId', user!.uid);
+        await prefs.setString('userName', user.displayName.toString());
+        await prefs.setString('userEmail', user.email.toString());
+
+        response.code = 200;
+        response.message = 'Successfully Login';
+        return response;
       }
 
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: emailTemp.toString(), password: password.toString());
-      User? user = userCredential.user;
-
-      // STORE UID IN SHAREDPREFERENCES
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('userId', user!.uid);
-      await prefs.setString('userName', user.displayName.toString());
-      await prefs.setString('userEmail', user.email.toString());
-
-      response.code = 200;
-      response.message = 'Successfully Login';
+      response.code = 500;
+      response.message = 'user-not-found';
       return response;
     } on FirebaseAuthException catch (e) {
       response.code = 500;
@@ -84,15 +84,13 @@ class AuthService {
         // ADD ADDITIONAL INFO
         await _collection.doc(user.uid).set({
           'email': email,
-          'role': 'User',
+          'name': '$firstName $lastName',
         });
       }
 
       response.code = 200;
       response.message = 'Account Created, you can now Login';
       return response;
-      // User? user = userCredential.user;
-      // return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
       response.code = 500;
       response.message = e.code;
