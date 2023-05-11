@@ -16,7 +16,7 @@ class _ProfileState extends State<Profile> {
   Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      uid = prefs.getString('uid')!;
+      uid = prefs.getString('userId')!;
       print('uid:' + uid);
     });
   }
