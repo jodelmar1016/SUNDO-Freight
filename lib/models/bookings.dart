@@ -13,6 +13,7 @@ class Booking {
   double? length;
   double? width;
   double? height;
+  double? distance;
   double? cost;
   double? costWithFee;
   String? senderName;
@@ -36,6 +37,7 @@ class Booking {
     this.length,
     this.width,
     this.height,
+    this.distance,
     this.cost,
     this.costWithFee,
     this.senderName,
@@ -57,6 +59,7 @@ class Booking {
     print('length: $length');
     print('width: $width');
     print('height: $height');
+    print('distance: $distance');
     print('cost: $cost');
     print('cost with fee: $costWithFee');
     print('sender name: $senderName');
@@ -78,6 +81,7 @@ class Booking {
       'length': length,
       'width': width,
       'height': weight,
+      'distance': distance,
       'cost': cost,
       'cost_with_fee': costWithFee,
       'sender_name': senderName,
