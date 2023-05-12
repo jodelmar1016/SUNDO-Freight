@@ -442,6 +442,7 @@ class _BookCargoState extends State<BookCargo> {
                                   length: newBooking.length,
                                   width: newBooking.width,
                                   height: newBooking.height,
+                                  distance: newBooking.distance,
                                   cost: newBooking.totalBookingCost,
                                   costWithFee:
                                       newBooking.totalBookingCostwithFee,
