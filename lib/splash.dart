@@ -25,7 +25,7 @@ class _SplashState extends State<Splash> {
   }
 
   Future<void> checkAuthState() async {
-    final res = await getUID('uid');
+    final res = await getUID('userId');
     if (res != null) {
       await Future.delayed(
         Duration(milliseconds: 1500),
