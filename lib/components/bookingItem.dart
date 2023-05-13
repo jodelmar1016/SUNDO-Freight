@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:freight/functions/gmap.dart';
+import 'package:freight/pages/details.dart';
 import 'package:freight/pages/tracking.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:freight/models/bookings.dart';
 
 class BookingItem extends StatelessWidget {
-  final String trackingNumber;
-  final String origin;
-  final String destination;
-  final LatLng originLatLng;
-  final LatLng destinationLatLng;
-  final double totalCost;
+  final Booking data;
   const BookingItem({
     super.key,
-    required this.trackingNumber,
-    required this.origin,
-    required this.originLatLng,
-    required this.destination,
-    required this.destinationLatLng,
-    required this.totalCost,
+    required this.data,
   });
 
   @override
@@ -29,22 +21,22 @@ class BookingItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (contect) =>
-                  Tracking(points: [originLatLng, destinationLatLng]),
+              builder: (contect) => Details(data: data),
             ),
           );
         },
-        title: Text('Tracking No.: $trackingNumber'),
+        title: Text('${data.type_of_cargo}'),
+        // title: Text('Tracking No.: $trackingNumber'),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Text('Sender: $sender'),
             // Text('Receiver: $receiver'),
-            Text('Origin: $origin'),
-            Text('Destination: $destination'),
+            Text('Origin: ${data.originName}'),
+            Text('Destination: ${data.destinationName}'),
             Divider(color: Colors.teal),
             Text(
-              'Total Cost: $totalCost',
+              'Total Cost: ${data.cost}',
               style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
             ),
           ],
