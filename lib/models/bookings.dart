@@ -46,6 +46,7 @@ class Booking {
     this.receiverContactNo,
     this.paymentMethod,
     this.status,
+    this.trackingNo,
   });
 
   display() {
@@ -67,6 +68,7 @@ class Booking {
     print('receiver name: $receiverName');
     print('receiver contact: $receiverContactNo');
     print('payment method: $paymentMethod');
+    print('tracking number: $trackingNo');
   }
 
   Map<String, dynamic> convertToMap() {
@@ -91,6 +93,7 @@ class Booking {
       'payment_method': paymentMethod,
       'waiting': waiting,
       'status': status,
+      'tracking_number': trackingNo,
     };
   }
 }
