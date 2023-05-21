@@ -84,26 +84,6 @@ class _ProfileState extends State<Profile> {
               Expanded(
                 child: Column(
                   children: [
-                    // Card(
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //         Text('Status: Incomplete Document'),
-                    //         Text('Valid ID: None'),
-                    //         Text('Drivers License: None'),
-                    //         SizedBox(
-                    //           width: MediaQuery.of(context).size.width,
-                    //           child: ElevatedButton(
-                    //             onPressed: () {},
-                    //             child: Text('Submit Document'),
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(height: 50),
                     Items(
                       title: 'Contact Us',
