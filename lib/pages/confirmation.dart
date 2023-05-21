@@ -56,7 +56,7 @@ class _ConfirmationState extends State<Confirmation> {
                             Divider(),
                             Text(
                                 'Payment method: ${widget.data.paymentMethod}'),
-                            Text('Total amount: ${widget.data.costWithFee}'),
+                            Text('Total amount: ${widget.data.totalCost}'),
                           ],
                         ),
                       ),

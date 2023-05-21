@@ -36,7 +36,7 @@ class BookingItem extends StatelessWidget {
             Text('Destination: ${data.destinationName}'),
             Divider(color: Colors.teal),
             Text(
-              'Total Cost: ${data.cost}',
+              'Total Cost: ${data.totalCost}',
               style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
             ),
           ],

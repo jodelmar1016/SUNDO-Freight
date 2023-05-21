@@ -14,8 +14,8 @@ class Booking {
   double? width;
   double? height;
   double? distance;
-  double? cost;
-  double? costWithFee;
+  double? totalCost;
+  double? driversShare;
   String? senderName;
   String? senderContactNo;
   String? receiverName;
@@ -38,8 +38,8 @@ class Booking {
     this.width,
     this.height,
     this.distance,
-    this.cost,
-    this.costWithFee,
+    this.totalCost,
+    this.driversShare,
     this.senderName,
     this.senderContactNo,
     this.receiverName,
@@ -61,8 +61,8 @@ class Booking {
     print('width: $width');
     print('height: $height');
     print('distance: $distance');
-    print('cost: $cost');
-    print('cost with fee: $costWithFee');
+    print('cost: $totalCost');
+    print('driver share: $driversShare');
     print('sender name: $senderName');
     print('sender contact: $senderContactNo');
     print('receiver name: $receiverName');
@@ -84,8 +84,8 @@ class Booking {
       'width': width,
       'height': weight,
       'distance': distance,
-      'cost': cost,
-      'cost_with_fee': costWithFee,
+      'cost': totalCost,
+      'driver_share': driversShare,
       'sender_name': senderName,
       'sender_contact_no': senderContactNo,
       'receiver_name': receiverName,

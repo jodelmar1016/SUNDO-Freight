@@ -91,8 +91,8 @@ class DataService {
     data.senderContactNo = snapshot['sender_contact_no'];
     data.receiverName = snapshot['receiver_name'];
     data.receiverContactNo = snapshot['receiver_contact_no'];
-    data.cost = snapshot['cost'];
-    data.costWithFee = snapshot['cost_with_fee'];
+    data.totalCost = snapshot['cost'];
+    data.driversShare = snapshot['driver_share'];
     data.paymentMethod = snapshot['payment_method'];
     data.status = snapshot['status'];
     data.trackingNo = snapshot['tracking_number'];
