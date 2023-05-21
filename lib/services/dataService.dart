@@ -96,6 +96,7 @@ class DataService {
     data.receiverName = snapshot['receiver_name'];
     data.receiverContactNo = snapshot['receiver_contact_no'];
     data.totalCost = snapshot['cost'];
+    data.fee = snapshot['fee'];
     data.driversShare = snapshot['driver_share'];
     data.paymentMethod = snapshot['payment_method'];
     data.status = snapshot['status'];

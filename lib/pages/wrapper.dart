@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:freight/pages/home.dart';
 import 'package:freight/pages/notification.dart';
 import 'package:freight/pages/profile.dart';
+import 'package:badges/badges.dart' as badges;
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -53,7 +54,11 @@ class _WrapperState extends State<Wrapper> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon: badges.Badge(
+              badgeContent: Text('3', style: TextStyle(color: Colors.white)),
+              child: Icon(Icons.notifications),
+            ),
+            // icon: Icon(Icons.notifications),
             label: 'Notification',
           ),
           BottomNavigationBarItem(
