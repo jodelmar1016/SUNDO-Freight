@@ -5,6 +5,7 @@ import 'package:freight/router.dart';
 import 'dart:async';
 import 'package:freight/services/auth.dart';
 import 'package:freight/authentication/registration.dart';
+import 'package:freight/components/loadingWithOpacity.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -171,16 +172,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          if (_isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey[200],
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
-                ),
-              ),
-            ),
+          if (_isLoading) LoadingWithOpacity()
         ],
       ),
     );

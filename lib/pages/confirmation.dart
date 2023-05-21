@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freight/models/bookings.dart';
 import 'package:freight/pages/wrapper.dart';
 import 'package:freight/services/dataService.dart';
+import 'package:freight/components/loadingWithOpacity.dart';
 
 class Confirmation extends StatefulWidget {
   Booking data;
@@ -88,16 +89,7 @@ class _ConfirmationState extends State<Confirmation> {
               ],
             ),
           ),
-          if (_isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey[200],
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
-                ),
-              ),
-            ),
+          if (_isLoading) LoadingWithOpacity()
         ],
       ),
     );
