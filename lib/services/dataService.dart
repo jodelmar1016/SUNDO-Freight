@@ -2,11 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freight/models/response.dart';
 import 'package:freight/models/bookings.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _collection = _firestore.collection('bookings');
 
 class DataService {
+  static String userId = '';
+
+  // GET USER ID
+  static Future<void> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString('userId')!;
+  }
+
   // ADD BOOKING
   static Future<Response> addBooking(Booking newBooking) async {
     Response response = new Response();
@@ -92,6 +101,18 @@ class DataService {
 
     return data;
   }
+
+  static Stream<QuerySnapshot> getNotification() {
+    print(userId);
+    CollectionReference _notification =
+        _firestore.collection('users/${userId}/notification');
+
+    CollectionReference notificationCollection = _notification;
+    notificationCollection.get();
+
+    return notificationCollection.snapshots();
+  }
+
   // For future purposes
   // static printDocument() async {
   //   CollectionReference bookingItemCollection = _collection;
