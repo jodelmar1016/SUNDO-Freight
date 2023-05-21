@@ -11,13 +11,15 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String uid = '';
+  bool _isLoading = true;
+  String name = '';
+  String email = '';
 
   Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      uid = prefs.getString('userId')!;
-      print('uid:' + uid);
+      name = prefs.getString('userName')!;
+      email = prefs.getString('userEmail')!;
     });
   }
 
@@ -30,36 +32,192 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     _loadUserData();
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Text(uid.isNotEmpty ? uid : 'Loading...'),
-        ElevatedButton(
-          onPressed: () async {
-            await clearPrefs();
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => Login(),
-                transitionDuration: Duration(milliseconds: 500),
-                transitionsBuilder: (context, animation1, animation2, child) {
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                      begin: Offset(-1.0, 0.0),
-                      end: Offset.zero,
-                    ).animate(animation1),
-                    child: child,
-                  );
-                },
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    CircleAvatar(
+                      foregroundColor: Colors.black,
+                      radius: 50,
+                      child: Icon(
+                        Icons.face,
+                        size: 80,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '$name',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          '$email',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-            );
-          },
-          child: Text('Logout'),
-        )
+              SizedBox(height: 20),
+              Divider(
+                color: Colors.teal,
+                thickness: 2,
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    // Card(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Text('Status: Incomplete Document'),
+                    //         Text('Valid ID: None'),
+                    //         Text('Drivers License: None'),
+                    //         SizedBox(
+                    //           width: MediaQuery.of(context).size.width,
+                    //           child: ElevatedButton(
+                    //             onPressed: () {},
+                    //             child: Text('Submit Document'),
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(height: 50),
+                    Items(
+                      title: 'Contact Us',
+                      icon: Icon(
+                        Icons.comment,
+                      ),
+                      action: () {},
+                    ),
+                    Items(
+                      title: 'FAQ',
+                      icon: Icon(
+                        Icons.question_mark_rounded,
+                      ),
+                      action: () {},
+                    ),
+                    Items(
+                      title: 'Terms and Conditions',
+                      icon: Icon(
+                        Icons.file_copy,
+                      ),
+                      action: () {},
+                    ),
+                    Items(
+                      title: 'Privacy Policy',
+                      icon: Icon(
+                        Icons.lock,
+                      ),
+                      action: () {},
+                    ),
+                    Items(
+                      title: 'Logout',
+                      icon: Icon(
+                        Icons.logout,
+                      ),
+                      action: () async {
+                        await clearPrefs();
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                Login(),
+                            transitionDuration: Duration(milliseconds: 500),
+                            transitionsBuilder:
+                                (context, animation1, animation2, child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: Offset(-1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation1),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        if (_isLoading)
+          Container(
+            color: Colors.white,
+            child: Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.grey[200],
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
+              ),
+            ),
+          ),
       ],
+    );
+  }
+}
+
+class Items extends StatelessWidget {
+  final String title;
+  final Icon icon;
+  final VoidCallback action;
+  const Items({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.action,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: action,
+      leading: icon,
+      title: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: Colors.grey),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$title',
+                style: TextStyle(fontSize: 14),
+              ),
+              Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+      horizontalTitleGap: 3,
     );
   }
 }
