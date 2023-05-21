@@ -9,11 +9,15 @@ final CollectionReference _collection = _firestore.collection('bookings');
 
 class DataService {
   static String userId = '';
+  static String userName = '';
+  static String userEmail = '';
 
-  // GET USER ID
-  static Future<void> getUserId() async {
+  // GET USER INFO
+  static Future<void> getUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     userId = prefs.getString('userId')!;
+    userName = prefs.getString('userName')!;
+    userEmail = prefs.getString('userEmail')!;
   }
 
   // ADD BOOKING
@@ -103,7 +107,6 @@ class DataService {
   }
 
   static Stream<QuerySnapshot> getNotification() {
-    print(userId);
     CollectionReference _notification =
         _firestore.collection('users/${userId}/notification');
 

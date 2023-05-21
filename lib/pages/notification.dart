@@ -11,20 +11,6 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  bool _isLoading = true;
-  String userId = '';
-  Stream<QuerySnapshot>? notification;
-
-  Future<void> loadData() async {
-    await DataService.getUserId();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

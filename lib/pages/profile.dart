@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:freight/authentication/login.dart';
 import 'package:freight/router.dart';
+import 'package:freight/services/dataService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -11,17 +12,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool _isLoading = true;
-  String name = '';
-  String email = '';
-
-  Future<void> _loadUserData() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      name = prefs.getString('userName')!;
-      email = prefs.getString('userEmail')!;
-    });
-  }
+  String name = DataService.userName;
+  String email = DataService.userEmail;
 
   Future<void> clearPrefs() async {
     final prefs = await SharedPreferences.getInstance();
@@ -29,134 +21,111 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _loadUserData();
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                      foregroundColor: Colors.black,
-                      radius: 50,
-                      child: Icon(
-                        Icons.face,
-                        size: 80,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '$name',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(
-                          '$email',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    )
-                  ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                CircleAvatar(
+                  foregroundColor: Colors.black,
+                  radius: 50,
+                  child: Icon(
+                    Icons.face,
+                    size: 80,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Divider(
-                color: Colors.teal,
-                thickness: 2,
-              ),
-              Expanded(
-                child: Column(
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 50),
-                    Items(
-                      title: 'Contact Us',
-                      icon: Icon(
-                        Icons.comment,
-                      ),
-                      action: () {},
+                    Text(
+                      '$name',
+                      style: TextStyle(fontSize: 20),
                     ),
-                    Items(
-                      title: 'FAQ',
-                      icon: Icon(
-                        Icons.question_mark_rounded,
-                      ),
-                      action: () {},
-                    ),
-                    Items(
-                      title: 'Terms and Conditions',
-                      icon: Icon(
-                        Icons.file_copy,
-                      ),
-                      action: () {},
-                    ),
-                    Items(
-                      title: 'Privacy Policy',
-                      icon: Icon(
-                        Icons.lock,
-                      ),
-                      action: () {},
-                    ),
-                    Items(
-                      title: 'Logout',
-                      icon: Icon(
-                        Icons.logout,
-                      ),
-                      action: () async {
-                        await clearPrefs();
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                Login(),
-                            transitionDuration: Duration(milliseconds: 500),
-                            transitionsBuilder:
-                                (context, animation1, animation2, child) {
-                              return SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: Offset(-1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(animation1),
-                                child: child,
-                              );
-                            },
-                          ),
-                        );
-                      },
+                    Text(
+                      '$email',
+                      style: TextStyle(fontSize: 14),
                     ),
                   ],
-                ),
-              )
-            ],
-          ),
-        ),
-        if (_isLoading)
-          Container(
-            color: Colors.white,
-            child: Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.grey[200],
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
-              ),
+                )
+              ],
             ),
           ),
-      ],
+          SizedBox(height: 20),
+          Divider(
+            color: Colors.teal,
+            thickness: 2,
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                SizedBox(height: 50),
+                Items(
+                  title: 'Contact Us',
+                  icon: Icon(
+                    Icons.comment,
+                  ),
+                  action: () {},
+                ),
+                Items(
+                  title: 'FAQ',
+                  icon: Icon(
+                    Icons.question_mark_rounded,
+                  ),
+                  action: () {},
+                ),
+                Items(
+                  title: 'Terms and Conditions',
+                  icon: Icon(
+                    Icons.file_copy,
+                  ),
+                  action: () {},
+                ),
+                Items(
+                  title: 'Privacy Policy',
+                  icon: Icon(
+                    Icons.lock,
+                  ),
+                  action: () {},
+                ),
+                Items(
+                  title: 'Logout',
+                  icon: Icon(
+                    Icons.logout,
+                  ),
+                  action: () async {
+                    await clearPrefs();
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            Login(),
+                        transitionDuration: Duration(milliseconds: 500),
+                        transitionsBuilder:
+                            (context, animation1, animation2, child) {
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: Offset(-1.0, 0.0),
+                              end: Offset.zero,
+                            ).animate(animation1),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

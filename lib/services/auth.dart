@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freight/services/dataService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:freight/models/response.dart';
 
@@ -8,24 +9,6 @@ final CollectionReference _collection = _firestore.collection('users');
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  // FirebaseUser? _firebaseUser(User? user) {
-  //   return user != null ? FirebaseUser(uid: user.uid) : null;
-  // }
-
-  // Stream<FirebaseUser?> get user {
-  //   return _auth.authStateChanges().map(_firebaseUser);
-  // }
-
-  // Future signInAnonymous() async {
-  //   try {
-  //     UserCredential userCredential = await _auth.signInAnonymously();
-  //     User? user = userCredential.user;
-  //     return _firebaseUser(user);
-  //   } catch (e) {
-  //     return FirebaseUser(code: e.toString(), uid: null);
-  //   }
-  // }
 
   Future<Response> signInEmailPassword(String email, String password) async {
     Response response = new Response();
@@ -46,6 +29,9 @@ class AuthService {
         await prefs.setString('userId', user!.uid);
         await prefs.setString('userName', user.displayName.toString());
         await prefs.setString('userEmail', user.email.toString());
+
+        // GET USER INFO
+        await DataService.getUserInfo();
 
         response.code = 200;
         response.message = 'Successfully Login';

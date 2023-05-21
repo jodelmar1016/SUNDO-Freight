@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freight/router.dart';
+import 'package:freight/services/dataService.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:freight/authentication/login.dart';
 import 'package:freight/pages/wrapper.dart';
@@ -27,6 +28,8 @@ class _SplashState extends State<Splash> {
   Future<void> checkAuthState() async {
     final res = await getUID('userId');
     if (res != null) {
+      // GET USER INFO
+      await DataService.getUserInfo();
       await Future.delayed(
         Duration(milliseconds: 1500),
         () {
