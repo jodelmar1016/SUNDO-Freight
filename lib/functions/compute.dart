@@ -42,7 +42,8 @@ class Compute {
   double totalBookingFee = 0;
 
   double totalBookingCost = 0;
-  double totalBookingCostwithFee = 0;
+
+  double driverShares = 0;
 
   getTypeOfVehicle() {
     volume = length * width * height;
@@ -87,6 +88,8 @@ class Compute {
     // COMPUTE TOTAL FEE
     totalBookingFee = totalBookingCost * bookingFee;
     // ADD BOOKING FEE
-    totalBookingCostwithFee = totalBookingCost + totalBookingFee;
+    totalBookingCost = totalBookingCost + totalBookingFee;
+    // GET DRIVERS SHARE
+    driverShares = totalBookingCost * .7;
   }
 }

@@ -412,7 +412,7 @@ class _BookCargoState extends State<BookCargo> {
                             ),
                           ),
                           Text(
-                            '₱${newBooking.totalBookingCostwithFee.toStringAsFixed(2)}',
+                            '₱${newBooking.totalBookingCost.toStringAsFixed(2)}',
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
@@ -444,9 +444,8 @@ class _BookCargoState extends State<BookCargo> {
                                   width: newBooking.width,
                                   height: newBooking.height,
                                   distance: newBooking.distance,
-                                  cost: newBooking.totalBookingCost,
-                                  costWithFee:
-                                      newBooking.totalBookingCostwithFee,
+                                  totalCost: newBooking.totalBookingCost,
+                                  driversShare: newBooking.driverShares,
                                   senderName: _senderName.text,
                                   senderContactNo: _senderContactNo.text,
                                   receiverName: _receiverName.text,
