@@ -7,6 +7,7 @@ import 'package:freight/models/response.dart';
 import 'package:freight/services/dataService.dart';
 import 'package:freight/functions/gmap.dart';
 import 'package:freight/functions/compute.dart';
+import 'package:freight/pages/payment.dart';
 
 class BookCargo extends StatefulWidget {
   const BookCargo({super.key});
@@ -95,7 +96,7 @@ class _BookCargoState extends State<BookCargo> {
       decoration: InputDecoration(
         labelText: "Type of Cargo",
         border: OutlineInputBorder(),
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
       validator: (value) {
         if (value == null) {
@@ -119,7 +120,7 @@ class _BookCargoState extends State<BookCargo> {
         border: OutlineInputBorder(),
         labelText: 'Weight',
         suffixText: 'kg',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -137,7 +138,7 @@ class _BookCargoState extends State<BookCargo> {
         border: OutlineInputBorder(),
         labelText: 'Length',
         suffixText: 'ft',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -155,7 +156,7 @@ class _BookCargoState extends State<BookCargo> {
         border: OutlineInputBorder(),
         labelText: 'Width',
         suffixText: 'ft',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -173,7 +174,7 @@ class _BookCargoState extends State<BookCargo> {
         border: OutlineInputBorder(),
         labelText: 'Height',
         suffixText: 'ft',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -214,7 +215,7 @@ class _BookCargoState extends State<BookCargo> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Sender Name',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -223,7 +224,7 @@ class _BookCargoState extends State<BookCargo> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Sender Contact Number',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -247,7 +248,7 @@ class _BookCargoState extends State<BookCargo> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Receiver Name',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -256,7 +257,7 @@ class _BookCargoState extends State<BookCargo> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Receiver Contact Number',
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -286,7 +287,7 @@ class _BookCargoState extends State<BookCargo> {
         },
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Column(
               children: [
                 Container(
@@ -339,7 +340,7 @@ class _BookCargoState extends State<BookCargo> {
                         ),
                         trailing: Icon(Icons.arrow_right_sharp),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       ListTile(
                         onTap: () async {
                           // GET THE NAME OF THE PLACE BASE ON LATLNG
@@ -386,11 +387,11 @@ class _BookCargoState extends State<BookCargo> {
                         trailing: Icon(Icons.arrow_right_sharp),
                       ),
                       Text('$distance km'),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       cargoInformation,
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       senderInformation,
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       receiverInformation,
                     ],
                   ),
@@ -428,13 +429,13 @@ class _BookCargoState extends State<BookCargo> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () async {
+                              onPressed: () {
                                 Booking createBooking = new Booking(
-                                  origin: _selectOrigin!,
-                                  destination: _selectDestination!,
-                                  originName: placenameOrigin!,
-                                  destinationName: placenameDestination!,
-                                  type_of_cargo: _dropdownValue!,
+                                  origin: _selectOrigin,
+                                  destination: _selectDestination,
+                                  originName: placenameOrigin,
+                                  destinationName: placenameDestination,
+                                  type_of_cargo: _dropdownValue,
                                   type_of_vehicle: newBooking.vehicleType
                                       .toString()
                                       .split('.')[1],
@@ -453,11 +454,18 @@ class _BookCargoState extends State<BookCargo> {
                                   status: 'processing',
                                 );
                                 // INSERT TO FIREBASE
-                                var result =
-                                    DataService.addBooking(createBooking);
+                                // var result =
+                                //     DataService.addBooking(createBooking);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Payment(data: createBooking),
+                                  ),
+                                );
                               },
                               child: Text(
-                                'SUBMIT',
+                                'NEXT',
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
