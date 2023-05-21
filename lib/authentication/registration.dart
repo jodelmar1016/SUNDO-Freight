@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freight/services/auth.dart';
 import 'package:freight/models/response.dart';
 import 'package:freight/authentication/login.dart';
+import 'package:freight/components/loadingWithOpacity.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -274,16 +275,7 @@ class _RegistrationState extends State<Registration> {
                 ),
                 if (_isLoading)
                   Positioned.fill(
-                    child: Container(
-                      color: Colors.black.withOpacity(0.5),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.grey[200],
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.teal),
-                        ),
-                      ),
-                    ),
+                    child: LoadingWithOpacity(),
                   ),
               ],
             ),
