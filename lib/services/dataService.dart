@@ -25,7 +25,10 @@ class DataService {
     Response response = new Response();
     DocumentReference documentReferencer = _collection.doc();
 
+    // ADD USER ID
+    newBooking.userId = userId;
     Map<String, dynamic> data = newBooking.convertToMap();
+    data['date'] = FieldValue.serverTimestamp();
 
     var result = await documentReferencer.set(data).whenComplete(() {
       response.code = 200;
@@ -101,6 +104,8 @@ class DataService {
     data.paymentMethod = snapshot['payment_method'];
     data.status = snapshot['status'];
     data.trackingNo = snapshot['tracking_number'];
+    data.userId = snapshot['userId'];
+    data.date = snapshot['date'].toDate();
 
     data.display();
 

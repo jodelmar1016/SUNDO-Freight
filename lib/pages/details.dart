@@ -121,11 +121,6 @@ class Details extends StatelessWidget {
                         'Booking fee: ${(data.fee! * 100).toStringAsFixed(0)}%'),
                     Text('Payment Method: ${data.paymentMethod}'),
                     Text('Total Cost: ${(data.totalCost)!.toStringAsFixed(2)}'),
-                    badges.Badge(
-                      badgeContent:
-                          Text('3', style: TextStyle(color: Colors.white)),
-                      child: Icon(Icons.notifications),
-                    )
                   ],
                 ),
               ),

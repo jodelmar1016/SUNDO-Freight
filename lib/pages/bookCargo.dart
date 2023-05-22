@@ -445,6 +445,7 @@ class _BookCargoState extends State<BookCargo> {
                                   height: newBooking.height,
                                   distance: newBooking.distance,
                                   totalCost: newBooking.totalBookingCost,
+                                  fee: newBooking.bookingFee,
                                   driversShare: newBooking.driverShares,
                                   senderName: _senderName.text,
                                   senderContactNo: _senderContactNo.text,
@@ -452,9 +453,6 @@ class _BookCargoState extends State<BookCargo> {
                                   receiverContactNo: _receiverContactNo.text,
                                   status: 'processing',
                                 );
-                                // INSERT TO FIREBASE
-                                // var result =
-                                //     DataService.addBooking(createBooking);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
