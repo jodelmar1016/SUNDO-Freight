@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:freight/services/dataService.dart';
 
 class Booking {
   String? docId;
@@ -26,6 +27,8 @@ class Booking {
   String? status;
   bool waiting = true;
   String? trackingNo;
+  String userId = DataService.userId;
+  DateTime? date;
 
   Booking({
     this.origin,
@@ -72,6 +75,8 @@ class Booking {
     print('receiver contact: $receiverContactNo');
     print('payment method: $paymentMethod');
     print('tracking number: $trackingNo');
+    print('user Id: $userId');
+    print('timestamp: $date');
   }
 
   Map<String, dynamic> convertToMap() {
@@ -98,6 +103,8 @@ class Booking {
       'waiting': waiting,
       'status': status,
       'tracking_number': trackingNo,
+      'userId': userId,
+      'date': date,
     };
   }
 }
