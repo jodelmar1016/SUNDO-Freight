@@ -54,11 +54,11 @@ class _WrapperState extends State<Wrapper> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: badges.Badge(
-              badgeContent: Text('3', style: TextStyle(color: Colors.white)),
-              child: Icon(Icons.notifications),
-            ),
-            // icon: Icon(Icons.notifications),
+            // icon: badges.Badge(
+            //   badgeContent: Text('3', style: TextStyle(color: Colors.white)),
+            //   child: Icon(Icons.notifications),
+            // ),
+            icon: Icon(Icons.notifications),
             label: 'Notification',
           ),
           BottomNavigationBarItem(
