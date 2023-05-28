@@ -116,10 +116,25 @@ class DataService {
     CollectionReference _notification =
         _firestore.collection('users/${userId}/notification');
 
-    CollectionReference notificationCollection = _notification;
-    notificationCollection.get();
+    Query notificationCollection =
+        _notification.orderBy('timestamp', descending: true);
 
     return notificationCollection.snapshots();
+  }
+
+  static Future<bool> markAsReadNotification(docId) async {
+    CollectionReference _notification =
+        _firestore.collection('users/${userId}/notification');
+
+    DocumentReference documentRef = _notification.doc(docId);
+
+    try {
+      await documentRef.update({'unread': false});
+      return true;
+    } catch (e) {
+      print('Error updating document: $e');
+      return false;
+    }
   }
 
   // For future purposes
