@@ -88,8 +88,9 @@ class Compute {
     // COMPUTE TOTAL FEE
     totalBookingFee = totalBookingCost * bookingFee;
     // ADD BOOKING FEE
-    totalBookingCost = totalBookingCost + totalBookingFee;
+    totalBookingCost =
+        double.parse((totalBookingCost + totalBookingFee).toStringAsFixed(2));
     // GET DRIVERS SHARE
-    driverShares = totalBookingCost * .7;
+    driverShares = double.parse((totalBookingCost * .7).toStringAsFixed(2));
   }
 }
