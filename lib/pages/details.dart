@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freight/models/bookings.dart';
 import 'package:freight/pages/myBookings.dart';
 import 'package:freight/services/dataService.dart';
-import 'package:badges/badges.dart' as badges;
+import 'package:flutter/services.dart';
 
 class Details extends StatelessWidget {
   final Booking data;
@@ -57,6 +57,13 @@ class Details extends StatelessWidget {
     });
   }
 
+  void _copyToClipboard(BuildContext context, dynamic trackingNo) {
+    Clipboard.setData(ClipboardData(text: trackingNo));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Text copied to clipboard')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +89,9 @@ class Details extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                _copyToClipboard(context, data.trackingNo);
+                              },
                               icon: Icon(Icons.copy, size: 20))
                         ],
                       ),
