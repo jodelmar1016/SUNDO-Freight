@@ -70,12 +70,38 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal,
-      body: Center(
-        child: Image.asset(
-          'assets/splash.gif',
-          fit: BoxFit.fill,
-          width: 300,
-          color: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 80),
+        child: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: Image.asset(
+                  'assets/splash.gif',
+                  fit: BoxFit.contain,
+                  width: 300,
+                  color: Colors.white,
+                ),
+              ),
+              Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'From',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Image.asset(
+                      'assets/sundo.png',
+                      fit: BoxFit.fill,
+                      width: 80,
+                      // color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
