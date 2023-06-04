@@ -4,10 +4,24 @@ import 'package:freight/pages/myBookings.dart';
 import 'package:freight/pages/fare.dart';
 import 'package:freight/router.dart';
 import 'package:freight/pages/tracking.dart';
+import 'package:freight/services/dataService.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  TextEditingController search = TextEditingController();
+
+  @override
+  void dispose() {
+    search.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,23 +69,42 @@ class Home extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 TextField(
+                  controller: search,
                   decoration: InputDecoration(
                     // prefixIcon: Icon(Icons.numbers),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
-                      onPressed: () {
-                        LatLng origin =
-                            LatLng(17.65234356992947, 121.74385882644731);
-                        LatLng destination =
-                            LatLng(17.61337898335645, 121.71409369881701);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Tracking(
-                              points: [origin, destination],
+                      onPressed: () async {
+                        List<LatLng> data =
+                            await DataService.getLatLng(search.text.trim());
+                        if (data.length != 0) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Tracking(
+                                points: [data[0], data[1]],
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Error'),
+                                content: Text('Dosn\'t exist'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('OK'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                     ),
                     hintText: 'Tracking No.',
