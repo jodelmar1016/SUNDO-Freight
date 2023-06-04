@@ -137,6 +137,26 @@ class DataService {
     }
   }
 
+  // TRACKING
+  static Future<List<LatLng>> getLatLng(trackingNumber) async {
+    List<LatLng> data = [];
+    CollectionReference collectionRef = _firestore.collection('bookings');
+
+    QuerySnapshot querySnapshot = await collectionRef
+        .where('tracking_number', isEqualTo: trackingNumber)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      GeoPoint origin = querySnapshot.docs.first['origin'];
+      GeoPoint destination = querySnapshot.docs.first['destination'];
+
+      data.add(LatLng(origin.latitude, origin.longitude));
+      data.add(LatLng(destination.latitude, destination.longitude));
+    }
+
+    return data;
+  }
+
   // For future purposes
   // static printDocument() async {
   //   CollectionReference bookingItemCollection = _collection;
