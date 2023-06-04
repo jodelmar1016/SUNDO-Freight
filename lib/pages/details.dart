@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freight/models/bookings.dart';
 import 'package:freight/pages/myBookings.dart';
+import 'package:freight/pages/tracking.dart';
 import 'package:freight/services/dataService.dart';
 import 'package:flutter/services.dart';
 
@@ -146,7 +147,19 @@ class Details extends StatelessWidget {
             else if (data.status == 'in transit')
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: ElevatedButton(onPressed: () {}, child: Text('Track')),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Tracking(
+                          points: [data.origin!, data.destination!],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text('Track'),
+                ),
               )
           ],
         ),
