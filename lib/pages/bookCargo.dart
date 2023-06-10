@@ -56,6 +56,13 @@ class _BookCargoState extends State<BookCargo> {
   }
 
   @override
+  void initState() {
+    _senderName.text = DataService.userName;
+    _senderContactNo.text = DataService.userContact;
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _senderName.dispose();
     _senderContactNo.dispose();
