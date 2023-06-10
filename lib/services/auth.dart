@@ -29,6 +29,7 @@ class AuthService {
         await prefs.setString('userId', user!.uid);
         await prefs.setString('userName', user.displayName.toString());
         await prefs.setString('userEmail', user.email.toString());
+        await prefs.setString('userContact', querySnapshot.docs[0]['contact']);
 
         // GET USER INFO
         await DataService.getUserInfo();
@@ -53,8 +54,15 @@ class AuthService {
     String lastName,
     String email,
     String password,
+    String confirmPassword,
+    String contact,
   ) async {
     Response response = new Response();
+    if (password != confirmPassword) {
+      response.code = 500;
+      response.message = 'Password mismatch';
+      return response;
+    }
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -70,7 +78,9 @@ class AuthService {
         // ADD ADDITIONAL INFO
         await _collection.doc(user.uid).set({
           'email': email,
-          'name': '$firstName $lastName',
+          'first_name': firstName,
+          'last_name': lastName,
+          'contact': contact,
         });
       }
 
