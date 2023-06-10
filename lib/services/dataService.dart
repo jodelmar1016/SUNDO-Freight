@@ -45,7 +45,10 @@ class DataService {
     CollectionReference bookingItemCollection = _collection;
     bookingItemCollection.get();
 
-    Query query = bookingItemCollection.where('status', isEqualTo: status);
+    Query query = bookingItemCollection
+        .where('status', isEqualTo: status)
+        .where('userId', isEqualTo: userId);
+
     return query.snapshots();
   }
 
@@ -54,7 +57,9 @@ class DataService {
     bookingItemCollection.get();
 
     Query query = bookingItemCollection
-        .where('status', whereIn: ['processing', 'for pick up']);
+        .where('status', whereIn: ['processing', 'for pick up']).where('userId',
+            isEqualTo: userId);
+
     return query.snapshots();
   }
 
