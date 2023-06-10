@@ -12,13 +12,13 @@ class SelectLocation extends StatefulWidget {
 }
 
 class _SelectLocationState extends State<SelectLocation> {
-  LatLng _selectedLatLng = LatLng(0, 0);
+  LatLng _selectedLatLng = LatLng(17.660759658795374, 121.74708318638257);
   String placename = '';
 
   Marker _marker = Marker(
-    markerId: MarkerId('myMarker'),
+    markerId: MarkerId('pim'),
     position: LatLng(17.660759658795374, 121.74708318638257),
-    infoWindow: InfoWindow(title: 'My Marker'),
+    infoWindow: InfoWindow(title: 'pin'),
     icon: BitmapDescriptor.defaultMarker,
   );
 
@@ -29,6 +29,19 @@ class _SelectLocationState extends State<SelectLocation> {
       _marker = _marker.copyWith(positionParam: latLng);
       _selectedLatLng = latLng;
     });
+  }
+
+  void getPlaceName() async {
+    String temp = await Gmap.getPlaceName(_selectedLatLng);
+    setState(() {
+      placename = temp;
+    });
+  }
+
+  @override
+  void initState() {
+    getPlaceName();
+    super.initState();
   }
 
   @override

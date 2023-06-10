@@ -22,6 +22,8 @@ class _BookCargoState extends State<BookCargo> {
   String? placenameOrigin;
   String? placenameDestination;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   String? _dropdownValue = 'Select';
   List<String> items = ['Package', 'Solid Bulk', 'Hazardous'];
 
@@ -122,6 +124,15 @@ class _BookCargoState extends State<BookCargo> {
         suffixText: 'kg',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        if (double.parse(value) <= 1 || double.parse(value) >= 50) {
+          return 'Input must be a number between 1 and 50';
+        }
+        return null;
+      },
     );
 
     // LENGTH --------------------------------->
@@ -140,6 +151,15 @@ class _BookCargoState extends State<BookCargo> {
         suffixText: 'ft',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        if (double.parse(value) <= 1 || double.parse(value) >= 50) {
+          return 'Input must be a number between 1 and 50';
+        }
+        return null;
+      },
     );
 
     // WIDTH ---------------------------------->
@@ -158,6 +178,15 @@ class _BookCargoState extends State<BookCargo> {
         suffixText: 'ft',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        if (double.parse(value) <= 1 || double.parse(value) >= 50) {
+          return 'Input must be a number between 1 and 50';
+        }
+        return null;
+      },
     );
 
     // HEIGHT --------------------------------->
@@ -176,6 +205,15 @@ class _BookCargoState extends State<BookCargo> {
         suffixText: 'ft',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        if (double.parse(value) <= 1 || double.parse(value) >= 50) {
+          return 'Input must be a number between 1 and 50';
+        }
+        return null;
+      },
     );
 
     // CARGO INFORMATION ----------------------->
@@ -217,15 +255,31 @@ class _BookCargoState extends State<BookCargo> {
         labelText: 'Sender Name',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        return null;
+      },
     );
 
     Widget senderContact = TextFormField(
       controller: _senderContactNo,
+      keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Sender Contact Number',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        if (value.length != 11) {
+          return 'Invalid phone number';
+        }
+        return null;
+      },
     );
 
     Widget senderInformation = Card(
@@ -250,15 +304,31 @@ class _BookCargoState extends State<BookCargo> {
         labelText: 'Receiver Name',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        return null;
+      },
     );
 
     Widget receiverContact = TextFormField(
       controller: _receiverContactNo,
+      keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Receiver Contact Number',
         contentPadding: EdgeInsets.all(8),
       ),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'This field is required';
+        }
+        if (value.length != 11) {
+          return 'Invalid phone number';
+        }
+        return null;
+      },
     );
 
     Widget receiverInformation = Card(
@@ -290,110 +360,113 @@ class _BookCargoState extends State<BookCargo> {
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Column(
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * .75,
-                  child: ListView(
-                    children: [
-                      ListTile(
-                        onTap: () async {
-                          // GO TO SELECT LOCATION
-                          final selectedLatLng = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SelectLocation(),
-                            ),
-                          );
+                Form(
+                  key: _formKey,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * .75,
+                    child: ListView(
+                      children: [
+                        ListTile(
+                          onTap: () async {
+                            // GO TO SELECT LOCATION
+                            final selectedLatLng = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SelectLocation(),
+                              ),
+                            );
 
-                          if (selectedLatLng != null) {
+                            if (selectedLatLng != null) {
+                              // GET THE NAME OF THE PLACE BASE ON LATLNG
+                              String temp =
+                                  await Gmap.getPlaceName(selectedLatLng);
+
+                              setState(() {
+                                placenameOrigin = temp;
+                                _selectOrigin = selectedLatLng;
+                              });
+
+                              // DISPLAY THE DISTANCE
+                              if (_selectOrigin != null &&
+                                  _selectDestination != null) {
+                                double val = await Gmap.getDistance(
+                                    _selectOrigin!, _selectDestination!);
+                                setState(() {
+                                  distance = val;
+                                });
+                              }
+                            }
+                            // SET DISTANCE FOR COMPUTATION
+                            newBooking.distance = distance;
+                            getTotalBookingCost();
+                          },
+                          title: placenameOrigin == null
+                              ? Text('Select Origin')
+                              : Text('$placenameOrigin'),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          tileColor: Colors.grey[200],
+                          leading: Icon(
+                            Icons.circle_outlined,
+                            color: Colors.teal,
+                          ),
+                          trailing: Icon(Icons.arrow_right_sharp),
+                        ),
+                        SizedBox(height: 5),
+                        ListTile(
+                          onTap: () async {
                             // GET THE NAME OF THE PLACE BASE ON LATLNG
-                            String temp =
-                                await Gmap.getPlaceName(selectedLatLng);
+                            final selectedLatLng = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SelectLocation(),
+                              ),
+                            );
 
-                            setState(() {
-                              placenameOrigin = temp;
-                              _selectOrigin = selectedLatLng;
-                            });
+                            if (selectedLatLng != null) {
+                              String temp =
+                                  await Gmap.getPlaceName(selectedLatLng);
 
-                            // DISPLAY THE DISTANCE
-                            if (_selectOrigin != null &&
-                                _selectDestination != null) {
-                              double val = await Gmap.getDistance(
-                                  _selectOrigin!, _selectDestination!);
                               setState(() {
-                                distance = val;
+                                placenameDestination = temp;
+                                _selectDestination = selectedLatLng;
                               });
+
+                              // DISPLAY THE DISTANCE
+                              if (_selectOrigin != null &&
+                                  _selectDestination != null) {
+                                double val = await Gmap.getDistance(
+                                    _selectOrigin!, _selectDestination!);
+                                setState(() {
+                                  distance = val;
+                                });
+                              }
                             }
-                          }
-                          // SET DISTANCE FOR COMPUTATION
-                          newBooking.distance = distance;
-                          getTotalBookingCost();
-                        },
-                        title: placenameOrigin == null
-                            ? Text('Select Origin')
-                            : Text('$placenameOrigin'),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        tileColor: Colors.grey[200],
-                        leading: Icon(
-                          Icons.circle_outlined,
-                          color: Colors.teal,
+                            // SET DISTANCE FOR COMPUTATION
+                            newBooking.distance = distance;
+                            getTotalBookingCost();
+                          },
+                          title: placenameDestination == null
+                              ? Text('Select Destination')
+                              : Text('$placenameDestination'),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          tileColor: Colors.grey[200],
+                          leading: Icon(
+                            Icons.location_pin,
+                            color: Colors.teal,
+                          ),
+                          trailing: Icon(Icons.arrow_right_sharp),
                         ),
-                        trailing: Icon(Icons.arrow_right_sharp),
-                      ),
-                      SizedBox(height: 5),
-                      ListTile(
-                        onTap: () async {
-                          // GET THE NAME OF THE PLACE BASE ON LATLNG
-                          final selectedLatLng = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SelectLocation(),
-                            ),
-                          );
-
-                          if (selectedLatLng != null) {
-                            String temp =
-                                await Gmap.getPlaceName(selectedLatLng);
-
-                            setState(() {
-                              placenameDestination = temp;
-                              _selectDestination = selectedLatLng;
-                            });
-
-                            // DISPLAY THE DISTANCE
-                            if (_selectOrigin != null &&
-                                _selectDestination != null) {
-                              double val = await Gmap.getDistance(
-                                  _selectOrigin!, _selectDestination!);
-                              setState(() {
-                                distance = val;
-                              });
-                            }
-                          }
-                          // SET DISTANCE FOR COMPUTATION
-                          newBooking.distance = distance;
-                          getTotalBookingCost();
-                        },
-                        title: placenameDestination == null
-                            ? Text('Select Destination')
-                            : Text('$placenameDestination'),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        tileColor: Colors.grey[200],
-                        leading: Icon(
-                          Icons.location_pin,
-                          color: Colors.teal,
-                        ),
-                        trailing: Icon(Icons.arrow_right_sharp),
-                      ),
-                      Text('$distance km'),
-                      SizedBox(height: 5),
-                      cargoInformation,
-                      SizedBox(height: 5),
-                      senderInformation,
-                      SizedBox(height: 5),
-                      receiverInformation,
-                    ],
+                        Text('$distance km'),
+                        SizedBox(height: 5),
+                        cargoInformation,
+                        SizedBox(height: 5),
+                        senderInformation,
+                        SizedBox(height: 5),
+                        receiverInformation,
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -430,36 +503,38 @@ class _BookCargoState extends State<BookCargo> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                Booking createBooking = new Booking(
-                                  origin: _selectOrigin,
-                                  destination: _selectDestination,
-                                  originName: placenameOrigin,
-                                  destinationName: placenameDestination,
-                                  type_of_cargo: _dropdownValue,
-                                  type_of_vehicle: newBooking.vehicleType
-                                      .toString()
-                                      .split('.')[1],
-                                  weight: newBooking.weight,
-                                  length: newBooking.length,
-                                  width: newBooking.width,
-                                  height: newBooking.height,
-                                  distance: newBooking.distance,
-                                  totalCost: newBooking.totalBookingCost,
-                                  fee: newBooking.bookingFee,
-                                  driversShare: newBooking.driverShares,
-                                  senderName: _senderName.text,
-                                  senderContactNo: _senderContactNo.text,
-                                  receiverName: _receiverName.text,
-                                  receiverContactNo: _receiverContactNo.text,
-                                  status: 'processing',
-                                );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        Payment(data: createBooking),
-                                  ),
-                                );
+                                if (_formKey.currentState!.validate()) {
+                                  Booking createBooking = new Booking(
+                                    origin: _selectOrigin,
+                                    destination: _selectDestination,
+                                    originName: placenameOrigin,
+                                    destinationName: placenameDestination,
+                                    type_of_cargo: _dropdownValue,
+                                    type_of_vehicle: newBooking.vehicleType
+                                        .toString()
+                                        .split('.')[1],
+                                    weight: newBooking.weight,
+                                    length: newBooking.length,
+                                    width: newBooking.width,
+                                    height: newBooking.height,
+                                    distance: newBooking.distance,
+                                    totalCost: newBooking.totalBookingCost,
+                                    fee: newBooking.bookingFee,
+                                    driversShare: newBooking.driverShares,
+                                    senderName: _senderName.text,
+                                    senderContactNo: _senderContactNo.text,
+                                    receiverName: _receiverName.text,
+                                    receiverContactNo: _receiverContactNo.text,
+                                    status: 'processing',
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Payment(data: createBooking),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text(
                                 'NEXT',
