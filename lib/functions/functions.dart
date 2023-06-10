@@ -15,3 +15,28 @@ String formatToDate(timestamp) {
   final DateFormat formatter = DateFormat('MM-dd-yyyy');
   return formatter.format(timestamp.toDate());
 }
+
+int validatePassword(password) {
+  RegExp capital = RegExp(r'^(?=.*?[A-Z])');
+  RegExp small = RegExp(r'^(?=.*?[a-z])');
+  RegExp special = RegExp(r'^(?=.*?[!@#\$&*~])');
+  RegExp numbers = RegExp(r'^(?=.*?[0-9])');
+
+  if (!capital.hasMatch(password)) {
+    return 1;
+  }
+  if (!small.hasMatch(password)) {
+    return 2;
+  }
+  if (!special.hasMatch(password)) {
+    return 3;
+  }
+  if (!numbers.hasMatch(password)) {
+    return 4;
+  }
+  return 0;
+}
+ // RegExp regex =
+  //     RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+  // return regex.hasMatch(password);
