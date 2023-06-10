@@ -3,6 +3,7 @@ import 'package:freight/services/auth.dart';
 import 'package:freight/models/response.dart';
 import 'package:freight/authentication/login.dart';
 import 'package:freight/components/loadingWithOpacity.dart';
+import 'package:freight/functions/functions.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -63,11 +64,15 @@ class _RegistrationState extends State<Registration> {
         if (value == null || value.trim().isEmpty) {
           return 'This field is required';
         }
+        if (value.length > 40) {
+          return 'Max length of 40 characters';
+        }
       },
       decoration: InputDecoration(
         labelText: "First Name",
         border: OutlineInputBorder(),
         prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -78,11 +83,15 @@ class _RegistrationState extends State<Registration> {
         if (value == null || value.trim().isEmpty) {
           return 'This field is required';
         }
+        if (value.length > 40) {
+          return 'Max length of 40 characters';
+        }
       },
       decoration: InputDecoration(
         labelText: "Last Name",
         border: OutlineInputBorder(),
         prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -93,12 +102,17 @@ class _RegistrationState extends State<Registration> {
         if (value == null || value.trim().isEmpty) {
           return 'This field is required';
         }
+        if (value.length != 11) {
+          return 'Invalid phone number';
+        }
+        return null;
       },
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         labelText: "Contact Number",
         border: OutlineInputBorder(),
         prefixIcon: Icon(Icons.phone),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -112,11 +126,13 @@ class _RegistrationState extends State<Registration> {
           }
           return 'Enter a Valid Email Address';
         }
+        return null;
       },
       decoration: InputDecoration(
         labelText: "Email Address",
         border: OutlineInputBorder(),
         prefixIcon: Icon(Icons.email),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -130,6 +146,19 @@ class _RegistrationState extends State<Registration> {
         }
         if (value.trim().length < 8) {
           return 'Password must be at least 8 characters in length';
+        }
+        int res = validatePassword(value);
+        if (res == 1) {
+          return 'Password must contain at least 1 uppercase letter';
+        }
+        if (res == 2) {
+          return 'Password must contain at least 1 lowercase letter';
+        }
+        if (res == 3) {
+          return 'Password must contain at least 1 special character(!@#\\\$&*~)';
+        }
+        if (res == 4) {
+          return 'Password must contain at least 1 numeric';
         }
         return null;
       },
@@ -147,6 +176,7 @@ class _RegistrationState extends State<Registration> {
             passwordObscured ? Icons.visibility_off : Icons.visibility,
           ),
         ),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -160,6 +190,19 @@ class _RegistrationState extends State<Registration> {
         }
         if (value.trim().length < 8) {
           return 'Password must be at least 8 characters in length';
+        }
+        int res = validatePassword(value);
+        if (res == 1) {
+          return 'Password must contain at least 1 uppercase letter';
+        }
+        if (res == 2) {
+          return 'Password must contain at least 1 lowercase letter';
+        }
+        if (res == 3) {
+          return 'Password must contain at least 1 special character(!@#\\\$&*~)';
+        }
+        if (res == 4) {
+          return 'Password must contain at least 1 numeric';
         }
         return null;
       },
@@ -177,6 +220,7 @@ class _RegistrationState extends State<Registration> {
             confirmPasswordObscured ? Icons.visibility_off : Icons.visibility,
           ),
         ),
+        contentPadding: EdgeInsets.all(8),
       ),
     );
 
@@ -188,10 +232,13 @@ class _RegistrationState extends State<Registration> {
             _isLoading = true;
           });
           Response response = await _auth.registerEmailPassword(
-              _firstName.text.trim(),
-              _lastName.text.trim(),
-              _email.text.trim(),
-              _password.text.trim());
+            _firstName.text.trim(),
+            _lastName.text.trim(),
+            _email.text.trim(),
+            _password.text.trim(),
+            _confirmPassword.text.trim(),
+            _contactNumber.text.trim(),
+          );
           setState(() {
             _isLoading = false;
           });
@@ -245,6 +292,8 @@ class _RegistrationState extends State<Registration> {
                         lastName,
                         SizedBox(height: 30),
                         email,
+                        SizedBox(height: 30),
+                        contactnumber,
                         SizedBox(height: 30),
                         password,
                         SizedBox(height: 30),

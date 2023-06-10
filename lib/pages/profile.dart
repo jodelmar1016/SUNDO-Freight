@@ -14,6 +14,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   String name = DataService.userName;
   String email = DataService.userEmail;
+  String contact = DataService.userContact;
 
   Future<void> clearPrefs() async {
     final prefs = await SharedPreferences.getInstance();
@@ -47,6 +48,10 @@ class _ProfileState extends State<Profile> {
                     Text(
                       '$name',
                       style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      '$contact',
+                      style: TextStyle(fontSize: 14),
                     ),
                     Text(
                       '$email',
