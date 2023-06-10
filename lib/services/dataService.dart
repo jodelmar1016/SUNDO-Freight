@@ -11,6 +11,7 @@ class DataService {
   static String userId = '';
   static String userName = '';
   static String userEmail = '';
+  static String userContact = '';
 
   // GET USER INFO
   static Future<void> getUserInfo() async {
@@ -18,6 +19,7 @@ class DataService {
     userId = prefs.getString('userId')!;
     userName = prefs.getString('userName')!;
     userEmail = prefs.getString('userEmail')!;
+    userContact = prefs.getString('userContact')!;
   }
 
   // ADD BOOKING
