@@ -4,6 +4,7 @@ import 'package:freight/pages/home.dart';
 import 'package:freight/pages/notification.dart';
 import 'package:freight/pages/profile.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:freight/services/dataService.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -54,11 +55,28 @@ class _WrapperState extends State<Wrapper> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
+            icon: StreamBuilder(
+              stream: DataService.getUnreadNotification(),
+              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data! > 0) {
+                    return badges.Badge(
+                      badgeContent: Text(
+                        '${snapshot.data}',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      child: Icon(Icons.notifications),
+                    );
+                  }
+                }
+                return Icon(Icons.notifications);
+              },
+            ),
             // icon: badges.Badge(
             //   badgeContent: Text('3', style: TextStyle(color: Colors.white)),
             //   child: Icon(Icons.notifications),
             // ),
-            icon: Icon(Icons.notifications),
+            // icon: Icon(Icons.notifications),
             label: 'Notification',
           ),
           BottomNavigationBarItem(

@@ -129,6 +129,19 @@ class DataService {
     return notificationCollection.snapshots();
   }
 
+  static Stream<int> getUnreadNotification() {
+    CollectionReference _notification =
+        _firestore.collection('users/${userId}/notification');
+
+    Query notificationCollection =
+        _notification.where('unread', isEqualTo: true);
+
+    return notificationCollection.snapshots().map((snapshot) {
+      print(snapshot);
+      return snapshot.docs.length;
+    });
+  }
+
   static Future<bool> markAsReadNotification(docId) async {
     CollectionReference _notification =
         _firestore.collection('users/${userId}/notification');
