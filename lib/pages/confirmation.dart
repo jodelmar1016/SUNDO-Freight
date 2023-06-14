@@ -82,6 +82,11 @@ class _ConfirmationState extends State<Confirmation> {
                         MaterialPageRoute(builder: (contex) => Wrapper()),
                         (route) => false,
                       );
+                      // ALERT MESSAGE
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Successfully book your cargo.')),
+                      );
                     },
                     child: Text('SUBMIT'),
                   ),
